@@ -6,13 +6,13 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './setAuthToken';
 import {setCurrentUser} from './actions/authenticationAction';
 
-import Home from './components/homePage/home';
+import Login from './components/loginPage/login';
 
-if (localStorage.jwtToken) {
-    setAuthToken(localStorage.jwtToken);
-    const decoded = jwt_decode(localStorage.jwtToken);
-    store.dispatch(setCurrentUser(decoded));
-}
+//if (localStorage.jwtToken) {
+//    setAuthToken(localStorage.jwtToken);
+ //   const decoded = jwt_decode(localStorage.jwtToken);
+ //   store.dispatch(setCurrentUser(decoded));
+//}
 
 class App extends Component {
 
@@ -21,7 +21,7 @@ class App extends Component {
             <Provider store={store}>
                 <Router>
                     <div>
-                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/" component={Login}/>
                     </div>
                 </Router>
             </Provider>

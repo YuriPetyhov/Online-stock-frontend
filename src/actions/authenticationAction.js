@@ -11,29 +11,12 @@ export const setCurrentUser = decoded => {
     }
 };
 
-export const loginUser = (user) => dispatch => {
-    axios.post(`${server}api/users/login`, user)
-        .then(res => {
-            const {token} = res.data;
-            localStorage.setItem('jwtToken', token);
-            setAuthToken(token);
-            const decoded = jwt_decode(token);
-            dispatch(setCurrentUser(decoded));
+export const loginUser = (user,reset) => dispatch => {
+    axios.post(`${server}api/allUsers/login`, user)
+        .then(() => {
+            console.log(reset)
+          reset()
         })
-        .then(res => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: {}
-            });
-        })
-        .catch(err => {
-            if (err.response) {
-                dispatch({
-                    type: GET_ERRORS,
-                    payload: err.response.data
-                });
-            }
-        });
 };
 
 export const logoutUser = (history) => dispatch => {
