@@ -6,7 +6,12 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './setAuthToken';
 import {setCurrentUser} from './actions/authenticationAction';
 
+import SecurityRoute from './components/securityRoute/securityRoute';
+
 import Login from './components/loginPage/login';
+
+import Header from './components/header/header';
+
 import MainPage from './components/mainPage';
 
 
@@ -22,10 +27,8 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div>
-                        <Route exact path="/" component={Login}/>
-                        <Route path="/home" component={MainPage} />
-                    </div>
+                    <SecurityRoute/>
+                    <Route exact path="/" component={Login}/>
                 </Router>
             </Provider>
         );

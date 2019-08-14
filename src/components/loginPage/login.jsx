@@ -44,7 +44,6 @@ const Login = (props) => {
         })
             .then(() => props.history.push('/home'))
         }
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -131,7 +130,7 @@ const Login = (props) => {
             </Box>
         </Container>
     );
-}
+};
 
 Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
