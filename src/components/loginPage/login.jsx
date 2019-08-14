@@ -41,13 +41,8 @@ const Login = (props) => {
             title: 'Congratulations!',
             text: 'Нou have successfully logged !',
             allowOutsideClick: false
-        }).then((result) => {
-            if (result.value) {
-                window.location.reload()
-            }
-
         })
-    }
+        }
 
     const handleSubmit = (e) => {
         e.preventDefault();
