@@ -7,6 +7,8 @@ import setAuthToken from './setAuthToken';
 import {setCurrentUser} from './actions/authenticationAction';
 
 import Login from './components/loginPage/login';
+import MainPage from './components/mainPage';
+
 
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
@@ -22,6 +24,7 @@ class App extends Component {
                 <Router>
                     <div>
                         <Route exact path="/" component={Login}/>
+                        <Route path="/home" component={MainPage} />
                     </div>
                 </Router>
             </Provider>

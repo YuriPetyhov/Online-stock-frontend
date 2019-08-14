@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React  from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,6 +6,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import {uid} from 'react-uid';
+import { connect } from 'react-redux';
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -77,10 +80,18 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function NavTabs() {
+ function NavTabs(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-
+    const{role} = props;
+    let current = null;
+    if(role === "manager" || role === "operator" || role === "controller"){
+        current = usersLink
+    } else if(role === "mainAdmin") {
+        current = rootAdminLink;
+    } else if(role === "companyAdmin"){
+        current = companyAdminLink;
+    }
     function handleChange(event, newValue) {
         setValue(newValue);
     }
@@ -94,10 +105,9 @@ export default function NavTabs() {
                     onChange={handleChange}
                     aria-label="nav tabs example"
                 >
-
                     {
-                        companyAdminLink.map((item) => {
-                            return <LinkTab label={item.label} href={item.href} {...a11yProps(item.pageInx)} />
+                        current.map((item) => {
+                            return <LinkTab label={item.label} key={uid(item)} href={item.href} {...a11yProps(item.pageInx)} />
                         })
                     }
 
@@ -125,3 +135,11 @@ export default function NavTabs() {
         </div>
     );
 }
+
+NavTabs.propTypes = {
+    role: PropTypes.string.isRequired
+};
+const mapStateToProps = (state) => ({
+    role: state.auth.user.role
+});
+export default connect( mapStateToProps,{})(NavTabs)
