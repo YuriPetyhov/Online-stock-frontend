@@ -9,7 +9,11 @@ import {setCurrentUser} from './actions/authenticationAction';
 import SecurityRoute from './components/securityRoute/securityRoute';
 
 import Login from './components/loginPage/login';
+
 import Header from './components/header/header';
+
+import MainPage from './components/mainPage';
+
 
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);

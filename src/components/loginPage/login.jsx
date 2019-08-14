@@ -42,8 +42,8 @@ const Login = (props) => {
             text: 'Нou have successfully logged !',
             allowOutsideClick: false
         })
-        };
-
+            .then(() => props.history.push('/home'))
+        }
     const handleSubmit = (e) => {
         e.preventDefault();
 
