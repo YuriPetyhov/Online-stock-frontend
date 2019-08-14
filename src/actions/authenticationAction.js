@@ -21,12 +21,6 @@ export const loginUser = (user,reset) => dispatch => {
             dispatch(setCurrentUser(decoded));
             reset()
         })
-        .then(res => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: {}
-            });
-        })
         .catch(err => {
             if (err.response) {
                 dispatch({

@@ -42,7 +42,7 @@ const Login = (props) => {
             text: 'Нou have successfully logged !',
             allowOutsideClick: false
         })
-        }
+        };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -130,7 +130,7 @@ const Login = (props) => {
             </Box>
         </Container>
     );
-}
+};
 
 Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
