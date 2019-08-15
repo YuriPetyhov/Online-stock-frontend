@@ -1,56 +1,39 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
-import {loginUser} from '../../actions/authenticationAction';
-
+import {addDriver} from '../../actions/driverAction';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import useStyles from './registerDriverStyles'
 
-import 'sweetalert2/src/sweetalert2.scss'
-import useStyles from './registerAdminStyles'
-
-const AdminRegister = (props) => {
+const DriverRegister = (props) => {
     const [values, setValues] = useState({
         email: '',
-        password: '',
-        errors: {}
+        name: '',
+        surnName: ''
     });
 
     const handleInputChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
     };
 
-    const reset = () => {
-        Swal.fire({
-            type: 'success',
-            title: 'Congratulations!',
-            text: 'Нou have successfully logged !',
-            allowOutsideClick: false
-        })
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const user = {
+        const driver = {
             email: values.email,
-            password: values.password,
+            name: values.name,
+            surnName: values.surnName
         };
-
-        props.loginUser(user,reset);
+        props.addDriver(driver);
 
     };
 
@@ -64,21 +47,10 @@ const AdminRegister = (props) => {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    New company admin form
+                    New company driver form
                 </Typography>
-                <ValidatorForm className={classes.form} noValidate >
+                <ValidatorForm className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextValidator
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Company name"
-                                name="text"
-                                autoComplete="Company name"
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <TextValidator
                                 variant="outlined"
@@ -88,6 +60,7 @@ const AdminRegister = (props) => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -95,11 +68,12 @@ const AdminRegister = (props) => {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                name="name"
+                                label="Name"
+                                type="text"
+                                id="name"
+                                autoComplete="current-name"
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -107,11 +81,12 @@ const AdminRegister = (props) => {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                name="password_confirm"
-                                label="Confirm password"
-                                type="password"
-                                id="password"
-                                autoComplete="confirm password"
+                                name="surnName"
+                                label="Surnname"
+                                type="text"
+                                id="surnName"
+                                autoComplete="current-surnname"
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -128,31 +103,16 @@ const AdminRegister = (props) => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                      Registration
                     </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </ValidatorForm>
             </div>
         </Container>
     );
 }
 
-AdminRegister.propTypes = {
-
-    loginUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+DriverRegister.propTypes = {
+    addDriver: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    auth: state.auth,
-    errors: state.errors
-});
-
-export default connect(mapStateToProps, {loginUser})(AdminRegister)
+export default connect(null, {addDriver})(DriverRegister)

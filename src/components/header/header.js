@@ -235,7 +235,7 @@ console.log(props)
                 <ListItemIcon>
                     <DraftsIcon/>
                 </ListItemIcon>
-                <Link to='/operator1'>operator 1</Link>
+                <Link to='/driveRegistration'> Registration drive</Link>
             </ListItem>
             <ListItem
                 button
