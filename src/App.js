@@ -12,7 +12,7 @@ import Login from './components/loginPage/login';
 
 import Header from './components/header/header';
 
-import MainPage from './components/mainPage';
+import MainPage from './components/header';
 
 
 if (localStorage.jwtToken) {
