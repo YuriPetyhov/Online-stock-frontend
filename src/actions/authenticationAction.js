@@ -31,9 +31,9 @@ export const loginUser = (user,reset) => dispatch => {
         });
 };
 
-export const logoutUser = (history) => dispatch => {
+export const logoutUser = () => dispatch => {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser({}));
-    history.push('/');
+   
 };
