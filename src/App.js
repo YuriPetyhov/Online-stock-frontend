@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import store from './store';
 import jwt_decode from 'jwt-decode';
@@ -8,12 +8,6 @@ import {setCurrentUser} from './actions/authenticationAction';
 
 import SecurityRoute from './components/securityRoute/securityRoute';
 
-import Login from './components/loginPage/login';
-
-import Header from './components/header/header';
-
-import MainPage from './components/mainPage';
-
 
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
@@ -21,18 +15,16 @@ if (localStorage.jwtToken) {
     store.dispatch(setCurrentUser(decoded));
 }
 
-class App extends Component {
+const App = () => {
 
-    render() {
-        return (
-            <Provider store={store}>
-                <Router>
-                    <SecurityRoute/>
-                    <Route exact path="/" component={Login}/>
-                </Router>
-            </Provider>
-        );
-    }
+    return (
+        <Provider store={store}>
+            <Router>
+            <SecurityRoute/>
+            </Router>
+        </Provider>
+    );
+
 }
 
 export default App;
