@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {loginUser} from '../../actions/authenticationAction';
+import {registerAdmin} from '../../actions/companyUserAction';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -24,8 +24,11 @@ import useStyles from './registerAdminStyles'
 
 const AdminRegister = (props) => {
     const [values, setValues] = useState({
+        role:'companyAdmin',
+        company:'',
         email: '',
         password: '',
+        password_confirm:'',
         errors: {}
     });
 
@@ -34,6 +37,13 @@ const AdminRegister = (props) => {
     };
 
     const reset = () => {
+        setValues({...values, role:'companyAdmin',
+            company:'',
+            email: '',
+            password: '',
+            password_confirm:'',
+            errors: {}})
+
         Swal.fire({
             type: 'success',
             title: 'Congratulations!',
@@ -45,12 +55,15 @@ const AdminRegister = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const user = {
+        const admin = {
+            company:values.company,
             email: values.email,
             password: values.password,
+            password_confirm: values.password_confirm,
+            role:values.role
         };
 
-        props.loginUser(user,reset);
+        props.registerAdmin(admin,reset);
 
     };
 
@@ -66,17 +79,19 @@ const AdminRegister = (props) => {
                 <Typography component="h1" variant="h5">
                     New company admin form
                 </Typography>
-                <ValidatorForm className={classes.form} noValidate >
+                <ValidatorForm className={classes.form} noValidate onSubmit={handleSubmit} >
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextValidator
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="email"
+                                id="company"
                                 label="Company name"
-                                name="text"
+                                name="company"
                                 autoComplete="Company name"
+                                value={values.company}
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -88,6 +103,8 @@ const AdminRegister = (props) => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                value={values.email}
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -100,6 +117,8 @@ const AdminRegister = (props) => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={values.password}
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -110,8 +129,10 @@ const AdminRegister = (props) => {
                                 name="password_confirm"
                                 label="Confirm password"
                                 type="password"
-                                id="password"
+                                id="password_confirm"
                                 autoComplete="confirm password"
+                                value={values.password_confirm}
+                                onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -144,8 +165,6 @@ const AdminRegister = (props) => {
 }
 
 AdminRegister.propTypes = {
-
-    loginUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -155,4 +174,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, {loginUser})(AdminRegister)
+export default connect(mapStateToProps, {registerAdmin})(AdminRegister)
