@@ -3,9 +3,13 @@ import {Router, Route} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import AdminRegister from "../registerAdmin/registerAdmin";
+
 import Header from '../mainPage/mainPage';
 import Home from '../homePage/homePage';
 import Login from '../loginPage/login';
+
+import Header from '../header';
+
 
 const SecurityRoute = (props) => {
     if(props.auth.isAuthenticated) {
@@ -69,10 +73,17 @@ const SecurityRoute = (props) => {
     }
     else {
         return (
+
             <Router>
                 <Redirect from='*' to="/" component={Login}/>
             </Router>
         );
+
+          
+        )
+    } else {
+        return <Redirect to={{pathname: '/'}}/>
+
     }
 
 

@@ -9,6 +9,7 @@ import {setCurrentUser} from './actions/authenticationAction';
 import SecurityRoute from './components/securityRoute/securityRoute';
 
 
+
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
     const decoded = jwt_decode(localStorage.jwtToken);
