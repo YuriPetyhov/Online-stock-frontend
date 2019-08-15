@@ -11,7 +11,7 @@ export const setCurrentUser = decoded => {
     }
 };
 
-export const loginUser = (user,reset) => dispatch => {
+export const loginUser = (user, reset) => dispatch => {
     axios.post(`${server}api/allUsers/login`, user)
         .then(res => {
             const {token} = res.data;
@@ -19,6 +19,10 @@ export const loginUser = (user,reset) => dispatch => {
             setAuthToken(token);
             const decoded = jwt_decode(token);
             dispatch(setCurrentUser(decoded));
+            dispatch({
+                type: GET_ERRORS,
+                payload: {}
+            })
             reset()
         })
         .catch(err => {
@@ -35,5 +39,8 @@ export const logoutUser = () => dispatch => {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser({}));
-   
+    dispatch({
+        type: GET_ERRORS,
+        payload: {}
+    });
 };
