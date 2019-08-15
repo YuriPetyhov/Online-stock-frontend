@@ -3,7 +3,7 @@ import {Router, Route} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import AdminRegister from "../registerAdmin/registerAdmin";
-
+import DriverRegistrer from '../registerDrive';
 import Home from '../homePage/homePage';
 import Login from '../loginPage/login';
 import Report from '../mainAdminReportPage/reportPage'
@@ -31,6 +31,8 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Route exact path="/operator1" component={AdminRegister}/>
+                        <Route from='/' to="/"/>
+                        <Route exact path="/driveRegistration" component={DriverRegistrer}/>
                         <Route exact path="/operator2" component={AdminRegister}/>
                         <Route exact path="/operator3" component={AdminRegister}/>
                         <Route exact path="/operator4" component={AdminRegister}/>
