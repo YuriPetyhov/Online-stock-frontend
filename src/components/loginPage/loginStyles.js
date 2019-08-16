@@ -6,8 +6,16 @@ const useStyles = makeStyles(theme => ({
             background: 'linear-gradient(45deg, #e3d48f 30%, #66ded4 90%)',
         },
     },
+    fab: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(10),
+        margin: theme.spacing(1),
+    },
+    extendedIcon: {
+        marginRight: theme.spacing(1),
+    },
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(5),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

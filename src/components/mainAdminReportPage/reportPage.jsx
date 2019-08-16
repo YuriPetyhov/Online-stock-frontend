@@ -14,22 +14,17 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import DirectionsIcon from '@material-ui/icons/Directions';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'. Built with '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Material-UI.
-            </Link>
-        </Typography>
-    );
-}
+import {Line} from 'react-chartjs-2';
+import DataInput from './dataInput'
+
 const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
@@ -43,94 +38,85 @@ const useStyles = makeStyles(theme => ({
             listStyle: 'none',
         },
     },
-    appBar: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-    toolbar: {
-        flexWrap: 'wrap',
-    },
-    toolbarTitle: {
-        flexGrow: 1,
-    },
-    link: {
-        margin: theme.spacing(1, 1.5),
-    },
     heroContent: {
-        padding: theme.spacing(8, 0, 6),
+        padding: theme.spacing(8, 0, 6)
     },
-    cardHeader: {
-        backgroundColor: theme.palette.grey[200],
-    },
-    cardPricing: {
+    time:{
+        padding: theme.spacing(3, 0, 6),
+        height: '100%',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'baseline',
-        marginBottom: theme.spacing(2),
+        flexDirection: 'column',
     },
-    footer: {
-        borderTop: `1px solid ${theme.palette.divider}`,
-        marginTop: theme.spacing(8),
-        paddingTop: theme.spacing(3),
-        paddingBottom: theme.spacing(3),
-        [theme.breakpoints.up('sm')]: {
-            paddingTop: theme.spacing(6),
-            paddingBottom: theme.spacing(6),
-        },
+    root: {
+        padding: '2px 4px',
+        display: 'flex',
+        alignItems: 'center',
+        width: 400,
+    },
+    input: {
+        marginLeft: 8,
+        flex: 1,
+    },
+    iconButton: {
+        padding: 10,
+    },
+    divider: {
+        width: 1,
+        height: 28,
+        margin: 4,
     },
 }));
 
-const tiers = [
-    {
-        title: 'Free',
-        price: '0',
-        description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
-        buttonText: 'Sign up for free',
-        buttonVariant: 'outlined',
-    },
-    {
-        title: 'Pro',
-        subheader: 'Most popular',
-        price: '15',
-        description: [
-            '20 users included',
-            '10 GB of storage',
-            'Help center access',
-            'Priority email support',
-        ],
-        buttonText: 'Get started',
-        buttonVariant: 'contained',
-    },
-    {
-        title: 'Enterprise',
-        price: '30',
-        description: [
-            '50 users included',
-            '30 GB of storage',
-            'Help center access',
-            'Phone & email support',
-        ],
-        buttonText: 'Contact us',
-        buttonVariant: 'outlined',
-    },
-];
-const footers = [
-    {
-        title: 'Company',
-        description: ['Team', 'History', 'Contact us', 'Locations'],
-    },
-    {
-        title: 'Features',
-        description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
-    },
-    {
-        title: 'Resources',
-        description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-    },
-    {
-        title: 'Legal',
-        description: ['Privacy policy', 'Terms of use'],
-    },
-];
+const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+        {
+            label: 'My First dataset',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: [65, 59, 80, 81, 56, 55, 40]
+        },
+
+        {
+            label: 'My First dataset',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'red',
+            borderColor: 'red',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'black',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'black',
+            pointHoverBorderColor: 'black',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 5,
+            data: [15, 39, 100, 31, 26, 65, 50]
+        }
+
+    ],
+
+};
 
 export default function Report() {
     const classes = useStyles();
@@ -138,84 +124,18 @@ export default function Report() {
     return (
         <React.Fragment>
             <CssBaseline />
-
-            {/* Hero unit */}
-            <Container maxWidth="sm" component="main" className={classes.heroContent}>
-                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                    Pricing
-                </Typography>
+            <Container  component="main" className={classes.heroContent}>
                 <Typography variant="h5" align="center" color="textSecondary" component="p">
-                    Quickly build an effective pricing table for your potential customers with this layout.
-                    It&apos;s built with default Material-UI components with little customization.
+                    Show report about companies
                 </Typography>
+                <Container maxWidth="sm" className={classes.time}>
+                    <DataInput/>
+                </Container>
+                <div>
+                    <h2>Line Example</h2>
+                    <Line data={data} />
+                </div>
             </Container>
-            {/* End hero unit */}
-            <Container maxWidth="md" component="main">
-                <Grid container spacing={5} alignItems="flex-end">
-                    {tiers.map(tier => (
-                        // Enterprise card is full width at sm breakpoint
-                        <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
-                            <Card>
-                                <CardHeader
-                                    title={tier.title}
-                                    subheader={tier.subheader}
-                                    titleTypographyProps={{ align: 'center' }}
-                                    subheaderTypographyProps={{ align: 'center' }}
-                                    action={tier.title === 'Pro' ? <StarIcon /> : null}
-                                    className={classes.cardHeader}
-                                />
-                                <CardContent>
-                                    <div className={classes.cardPricing}>
-                                        <Typography component="h2" variant="h3" color="textPrimary">
-                                            ${tier.price}
-                                        </Typography>
-                                        <Typography variant="h6" color="textSecondary">
-                                            /mo
-                                        </Typography>
-                                    </div>
-                                    <ul>
-                                        {tier.description.map(line => (
-                                            <Typography component="li" variant="subtitle1" align="center" key={line}>
-                                                {line}
-                                            </Typography>
-                                        ))}
-                                    </ul>
-                                </CardContent>
-                                <CardActions>
-                                    <Button fullWidth variant={tier.buttonVariant} color="primary">
-                                        {tier.buttonText}
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
-            {/* Footer */}
-            <Container maxWidth="md" component="footer" className={classes.footer}>
-                <Grid container spacing={4} justify="space-evenly">
-                    {footers.map(footer => (
-                        <Grid item xs={6} sm={3} key={footer.title}>
-                            <Typography variant="h6" color="textPrimary" gutterBottom>
-                                {footer.title}
-                            </Typography>
-                            <ul>
-                                {footer.description.map(item => (
-                                    <li key={item}>
-                                        <Link href="#" variant="subtitle1" color="textSecondary">
-                                            {item}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Grid>
-                    ))}
-                </Grid>
-                <Box mt={5}>
-                    <Copyright />
-                </Box>
-            </Container>
-            {/* End footer */}
         </React.Fragment>
     );
 }
