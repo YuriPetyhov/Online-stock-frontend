@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
-import {Select} from '@material-ui/core'
-import InputLabel from '@material-ui/core/InputLabel'
-import Button from '@material-ui/core/Button'
-import MenuItem from '@material-ui/core/MenuItem'
+import Grid from '@material-ui/core/Grid/index'
+import TextField from '@material-ui/core/TextField/index'
+import {Select} from '@material-ui/core/index'
+import InputLabel from '@material-ui/core/InputLabel/index'
+import Button from '@material-ui/core/Button/index'
+import MenuItem from '@material-ui/core/MenuItem/index'
 
 
 export default ({onSubmit, roles}) => {

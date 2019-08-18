@@ -1,127 +1,96 @@
-import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import React from 'react';
+import {logoutUser} from '../../actions/authenticationAction';
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+
+import {connect} from "react-redux";
+import AppBar from "@material-ui/core/AppBar/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+
+import useStyles from './headerStyles'
+
+const Header = (props) => {
+
+    const logout = (e) => {
+        e.preventDefault();
+        props.logoutUser()
+    };
+
+    const classes = useStyles();
+
+    const navigation = (linkArr) => {
+
+        const navList = linkArr.map((elem) => {
+            return (
+                <Link key={elem.name} variant="button" color="textPrimary" href={elem.link} className={classes.link}>
+                    {elem.name}
+                </Link>)
+        });
+        return (
+            <nav>
+                {navList}
+            </nav>
+        )
+    };
+
+    const NavigationBar = () => {
+        switch (props.auth.user.role) {
+            case 'mainAdmin':
+                return navigation([
+                    {name: 'Home', link: '/'},
+                    {name: 'Registration new company ', link: '/newCompanyAdmin'},
+                    {name: 'Reports', link: '/reports'},
+                    {name: 'Companies', link: '/companiesList'}]);
+            case 'companyAdmin':
+                return navigation([
+                    {name: 'companyAdmin1', link: '/companyAdmin1'},
+                    {name: 'companyAdmin2', link: '/companyAdmin2'},
+                    {name: 'companyAdmin3', link: '/companyAdmin3'},
+                    {name: 'companyAdmin4', link: '/companyAdmin4'}]);
+            case 'manager':
+                return navigation([
+                    {name: 'manager1', link: '/manager1'},
+                    {name: 'manager2', link: '/manager2'},
+                    {name: 'manager3', link: '/manager3'},
+                    {name: 'manager4', link: '/manager4'}]);
+            case 'operator':
+                return navigation([
+                    {name: 'operator1', link: '/operator1'},
+                    {name: 'operator2', link: '/operator2'},
+                    {name: 'operator3', link: '/operator3'},
+                    {name: 'operator4', link: '/operator4'}]);
+            case 'controller':
+                return navigation([
+                    {name: 'controller1', link: '/controller1'},
+                    {name: 'controller2', link: '/controller2'},
+                    {name: 'controller3', link: '/controller3'},
+                    {name: 'controller4', link: '/controller4'}]);
+
+            default:
+                return null
+        }
+    };
 
     return (
-        <Typography
-            component="div"
-            role="tabpanel"
-            hidden={value !== index}
-            id={`nav-tabpanel-${index}`}
-            aria-labelledby={`nav-tab-${index}`}
-            {...other}
-        >
-            <Box p={3}>{children}</Box>
-        </Typography>
+        <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+            <Toolbar className={classes.toolbar}>
+                <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                    Company name
+                </Typography>
+                <NavigationBar
+                />
+                <Button color="primary" variant="outlined" className={classes.link} onClick={logout}>
+                    Logout
+                </Button>
+            </Toolbar>
+        </AppBar>
     );
-}
-
-const rootAdminLink =  [
-    {label: "admin 1", href: "/smthcompanyAdmin1", pageInx: 0 },
-    {label: "admin 2", href: "/smthcompanyAdmin2", pageInx: 1 },
-    {label: "admin 3", href: "/smthcompanyAdmin3", pageInx: 2 },
-
-];
-
-const companyAdminLink = [
-    {label: "companyAdmin 1", href: "/companyAdmin", pageInx: 3 },
-    {label: "companyAdmin 2", href: "/companyAdmin", pageInx: 4 },
-    {label: "companyAdmin 3", href: "/companyAdmin", pageInx: 5 },
-
-];
-
-const usersLink =  [
-    {label: "users 1", href: "/users1", pageInx: 6 },
-    {label: "users 2", href: "/users2", pageInx: 7 },
-    {label: "users 3", href: "/users3", pageInx: 8 },
-
-];
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `nav-tab-${index}`,
-        'aria-controls': `nav-tabpanel-${index}`,
-    };
-}
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
 
-function LinkTab(props) {
-    return (
-        <Tab
-            component="a"
-            onClick={event => {
-                event.preventDefault();
-            }}
-            {...props}
-        />
-    );
-}
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-    },
-}));
-
-export default function NavTabs() {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-
-    function handleChange(event, newValue) {
-        setValue(newValue);
-    }
-
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Tabs
-                    variant="fullWidth"
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="nav tabs example"
-                >
-
-                    {
-                        companyAdminLink.map((item) => {
-                            return <LinkTab label={item.label} href={item.href} {...a11yProps(item.pageInx)} />
-                        })
-                    }
-
-                </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-                Page One
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                Page Two
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Page Three
-            </TabPanel>
-
-            <TabPanel value={value} index={3}>
-                companyAdmin One
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                companyAdmin Two
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-                companyAdmin Three
-            </TabPanel>
-        </div>
-    );
-}
+export default connect(mapStateToProps, {logoutUser})(Header)

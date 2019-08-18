@@ -17,13 +17,12 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-import 'sweetalert2/src/sweetalert2.scss'
 import useStyles from './loginStyles'
 
 
 const Login = (props) => {
+
 
     const [values, setValues] = useState({
         email: '',
@@ -31,18 +30,27 @@ const Login = (props) => {
         errors: {}
     });
 
+    const validateRules = () => {
+        ValidatorForm.addValidationRule('isUser', () => {
+            return !props.errors.email;
+        });
+        ValidatorForm.addValidationRule('isPassword', () => {
+            return !props.errors.password;
+        });
+    };
+
+
+    useEffect(() => {
+        validateRules()
+    });
+
     const handleInputChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
     };
 
     const reset = () => {
-        Swal.fire({
-            type: 'success',
-            title: 'Congratulations!',
-            text: 'Нou have successfully logged !',
-            allowOutsideClick: false
-        })
-        }
+        props.history.push('/')
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,9 +60,10 @@ const Login = (props) => {
             password: values.password,
         };
 
-        props.loginUser(user,reset);
+        props.loginUser(user, reset);
 
     };
+
 
     const classes = useStyles();
 
@@ -81,8 +90,8 @@ const Login = (props) => {
                         autoFocus
                         onChange={handleInputChange}
                         value={values.email}
-                        validators={['required', 'isEmail']}
-                        errorMessages={['this field is required', 'email is not valid']}
+                        validators={['required', 'isEmail', 'isUser']}
+                        errorMessages={['this field is required', 'email is not valid', props.errors.email]}
                     />
                     <TextValidator
                         variant="outlined"
@@ -95,14 +104,16 @@ const Login = (props) => {
                         id="password"
                         value={values.password}
                         autoComplete="current-password"
-                        validators={['required']}
-                        errorMessages={['this field is required']}
+                        validators={['required', 'isPassword']}
+                        errorMessages={['this field is required', props.errors.password]}
                         onChange={handleInputChange}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
                         label="Remember me"
                     />
+                    <span style={{color:'red'}}>{props.errors.email}</span>
+                    <span style={{color:'red'}}>{props.errors.password}</span>
                     <Button
                         type="submit"
                         fullWidth
@@ -130,7 +141,7 @@ const Login = (props) => {
             </Box>
         </Container>
     );
-}
+};
 
 Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
