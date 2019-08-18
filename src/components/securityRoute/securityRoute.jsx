@@ -9,7 +9,7 @@ import Login from '../loginPage/login';
 import Report from '../mainAdminReportPage/reportPage'
 import Header from '../header/header';
 import Companies from '../companiesListPage/companiesList'
-
+import Carrier from '../searchCarrier';
 
 const SecurityRoute = (props) => {
     if (props.auth.isAuthenticated) {
@@ -30,10 +30,10 @@ const SecurityRoute = (props) => {
                 return (
                     <div>
                         <Header/>
-                        <Route exact path="/operator1" component={AdminRegister}/>
                         <Route from='/' to="/"/>
+                        <Route exact path="/searchCarrier" component={Carrier}/>
                         <Route exact path="/driveRegistration" component={DriverRegistrer}/>
-                        <Route exact path="/operator2" component={AdminRegister}/>
+                        <Route exact path="/operator" component={AdminRegister}/>
                         <Route exact path="/operator3" component={AdminRegister}/>
                         <Route exact path="/operator4" component={AdminRegister}/>
                         <Route exact path="/home" component={Home}/>

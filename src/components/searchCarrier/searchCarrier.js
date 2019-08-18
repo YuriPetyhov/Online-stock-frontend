@@ -2,7 +2,6 @@ import React, {useState } from 'react';
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Typography from "@material-ui/core/Typography";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
@@ -10,17 +9,20 @@ import Button from "@material-ui/core/Button";
 import useStyles from "../registerDrive/registerDriverStyles";
 import {connect} from "react-redux";
 import {searchCarrier} from "../../actions/searchCarrier";
-import Icon from '@material-ui/core/Icon';
-import SearchCarrierModal from '../searchCarrier';
-import axios from "axios";
-import server from "../../serverConfig";
+import SearchCarrierModal from '../modalUI/searchCarrierModal';
+import SearchIcon from '@material-ui/icons/Search';
 
 const SearchCarrier = (props) => {
     const [company, setCompany] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
 
     const handleInputChange = (e) => {
         setCompany(e.target.value)
     };
+
+    const handleModal = () => {
+        setModalOpen(true)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,7 +32,11 @@ const SearchCarrier = (props) => {
         };
 
         searchCarrier(carrier)
-            .then((r) => {console.log(r)})
+            .then((res) => {
+                if(res.data.length < 1) {
+                    handleModal()
+                }
+            })
 
     //TODO вот сюда для модалки
 };
@@ -40,10 +46,11 @@ const SearchCarrier = (props) => {
     return (
 
         <Container component="main" maxWidth="xs">
+            {modalOpen ? <SearchCarrierModal/> : null}
             <CssBaseline/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <Icon className={classes.icon}>search_circle</Icon>
+                    <SearchIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Search Carrier
