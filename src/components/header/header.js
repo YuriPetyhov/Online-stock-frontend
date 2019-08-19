@@ -1,7 +1,7 @@
 import React from 'react';
 import {logoutUser} from '../../actions/authenticationAction';
 
-import {Link} from 'react-router-dom';
+import Link from '../Link';
 import Button from '@material-ui/core/Button';
 
 import {connect} from "react-redux";
