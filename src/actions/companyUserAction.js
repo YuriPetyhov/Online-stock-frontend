@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ERRORS} from './types';
+import {GET_CURRENT_STATISTIC, GET_ERRORS} from './types';
 import server from '../serverConfig'
 
 export const registerAdmin = (admin, reset) => dispatch => {
@@ -23,6 +23,12 @@ export const registerAdmin = (admin, reset) => dispatch => {
 
 export const getStatistic = (date) => dispatch => {
     axios.post(`${server}api/admins/getStatistic`, date)
+        .then(res => {
+            dispatch({
+                type: GET_CURRENT_STATISTIC,
+                payload: res.data
+            });
+        })
         .then(() => {
             dispatch({
                 type: GET_ERRORS,
