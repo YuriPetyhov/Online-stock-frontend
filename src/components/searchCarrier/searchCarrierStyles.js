@@ -1,4 +1,5 @@
 import {makeStyles} from '@material-ui/core/styles';
+import {bool} from "prop-types";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -23,6 +24,7 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+
 }));
 
 export default useStyles

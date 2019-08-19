@@ -3,15 +3,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { Link } from 'react-router-dom'
-export default function AlertDialog() {
+import { Link } from 'react-router-dom';
+import styles from './searchCarrierModal.css';
+
+export default function AlertDialog(props) {
     const [open, setOpen] = React.useState(true);
-
-    function handleClickOpen() {
-        setOpen(true);
-    }
-
     function handleClose() {
         setOpen(false);
     }
@@ -24,17 +20,16 @@ export default function AlertDialog() {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                          К сожелению такого перевозчика нет, хотите добавить
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Link onClick={handleClose} color="primary">
+                    <Link className = 'link' to="/searchCarrier" onClick={props.closeModal} color="primary">
                         Нет, спасибо
                     </Link>
-                    <Link to="/driveRegistration" onClick={handleClose} color="primary" autoFocus>
+                    <Link className = 'link' to="/driveRegistration" onClick={handleClose} color="primary">
                         Да, хочу
                     </Link>
                 </DialogActions>

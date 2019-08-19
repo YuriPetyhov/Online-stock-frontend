@@ -3,9 +3,6 @@ import server from "../serverConfig";
 
 export const searchCarrier = (carrier) => {
     const{company} = carrier;
- return  axios.get(`${server}api/carriers/${company}`)
-
+    return  axios.get(`${server}api/carriers/${company}`)
 
 };
-
-//TODO почему не пробрасывет промисс

@@ -6,47 +6,53 @@ import Typography from "@material-ui/core/Typography";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import useStyles from "../registerDrive/registerDriverStyles";
+import useStyles from "../searchCarrier/searchCarrierStyles";
 import {connect} from "react-redux";
-import {searchCarrier} from "../../actions/searchCarrier";
+import {searchCarrier} from "../../servies/searchCarrier";
 import SearchCarrierModal from '../modalUI/searchCarrierModal';
 import SearchIcon from '@material-ui/icons/Search';
+import CarrierTable from './carrierTable';
 
 const SearchCarrier = (props) => {
     const [company, setCompany] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-
+    const[carrier, setCarrier] = React.useState([]);
+    const[Info, setInfo] = React.useState(false);
     const handleInputChange = (e) => {
         setCompany(e.target.value)
     };
 
-    const handleModal = () => {
+    const handleModalOpen = () => {
         setModalOpen(true)
+    }
+    const handleModalClose = () => {
+        setModalOpen(false)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const carrier = {
+        const  findCarrier = {
             company: company,
         };
 
-        searchCarrier(carrier)
+        searchCarrier(findCarrier)
             .then((res) => {
                 if(res.data.length < 1) {
-                    handleModal()
+                    handleModalOpen();
+                } else {
+                    setInfo(true);
+                    setCarrier(res.data);
                 }
             })
-
-    //TODO вот сюда для модалки
 };
 
     const classes = useStyles();
 
     return (
-
+    <React.Fragment>
         <Container component="main" maxWidth="xs">
-            {modalOpen ? <SearchCarrierModal/> : null}
+            {modalOpen ? <SearchCarrierModal  closeModal = {handleModalClose}/> : null}
             <CssBaseline/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -82,8 +88,14 @@ const SearchCarrier = (props) => {
                 </ValidatorForm>
             </div>
         </Container>
+        {Info
+            ? (  <CarrierTable rows = { [{"company": carrier.company, "email": carrier.email, "tel": carrier.tel}] } /> )
+            : null
+        }
+    </React.Fragment>
+
     )
 
 }
 
-export default connect(null, {})(SearchCarrier)
+export default connect(null, null)(SearchCarrier)
