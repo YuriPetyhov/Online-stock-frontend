@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -20,14 +20,21 @@ const Report = (props) => {
     const [fromDate, setFromDate] = useState(new Date('2014-08-18T21:11:54'));
     const [toDate, setToDate] = useState(new Date());
     const [charVisibility, setCharVisibility] = useState(false);
+    const [statistic, setStatistic] = useState(props.adminCompanyStatistic);
 
     function handleCharChange() {
         props.getStatistic({
-            from:fromDate,
-            to:toDate
+            from: fromDate,
+            to: toDate
         });
-        setCharVisibility(true);
+
+        setCharVisibility(true)
     }
+
+    useEffect(() => {
+        setStatistic(props.adminCompanyStatistic)
+    });
+
 
     return (
         <React.Fragment>
@@ -49,11 +56,14 @@ const Report = (props) => {
                 </Container>
                 <Char
                     charVisibility={charVisibility}
+                    fromDate={fromDate}
+                    toDate={toDate}
+                    statistic={statistic}
                 />
             </Container>
         </React.Fragment>
     );
-}
+};
 
 Report.propTypes = {
     auth: PropTypes.object.isRequired,
@@ -62,7 +72,8 @@ Report.propTypes = {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    errors: state.errors
+    errors: state.errors,
+    adminCompanyStatistic: state.adminCompanyStatistic
 });
 
 export default connect(mapStateToProps, {getStatistic})(Report)

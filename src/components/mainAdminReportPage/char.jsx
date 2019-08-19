@@ -1,27 +1,29 @@
 import {Bar} from "react-chartjs-2";
 import React from "react";
 
-const data = {
-    labels: ['from 0 to 1'],
-    datasets: [
-        {
-            label: 'Registered',
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            data: [65,100]
-        },
+export default function Char({charVisibility, fromDate, toDate, statistic}) {
 
-        {
-            label: 'Left',
-            backgroundColor: 'red',
-            data: [15,100]
-        }
+    console.log(statistic)
+    const data = {
+        labels: [`From ${fromDate}                      To ${toDate}`],
+        datasets: [
+            {
+                label: 'Created',
+                backgroundColor: 'rgba(75,192,192,0.4)',
+                data: statistic.created
+            },
 
-    ],
+            {
+                label: 'Deleted',
+                backgroundColor: 'red',
+                data: statistic.deleted
+            }
 
-};
+        ],
 
-export default function Char({charVisibility}) {
-    if(charVisibility) {
+    };
+
+    if (charVisibility) {
         return (
             <div>
                 <h2>Char</h2>
@@ -34,6 +36,5 @@ export default function Char({charVisibility}) {
                     data={data}/>
             </div>
         )
-    }
-    else return null
+    } else return null
 }
