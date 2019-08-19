@@ -15,11 +15,12 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Fab from '@material-ui/core/Fab';
+import NavigationIcon from '@material-ui/icons/Navigation';
 
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 import useStyles from './loginStyles'
-
 
 const Login = (props) => {
 
@@ -70,7 +71,11 @@ const Login = (props) => {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
-            <div className={classes.paper}>
+            <Box className={classes.paper}>
+                <Fab variant="extended" aria-label="delete" color="primary" className={classes.fab} href='/'>
+                    <NavigationIcon className={classes.extendedIcon}/>
+                    Go to main page
+                </Fab>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon/>
                 </Avatar>
@@ -112,8 +117,8 @@ const Login = (props) => {
                         control={<Checkbox value="remember" color="primary"/>}
                         label="Remember me"
                     />
-                    <span style={{color:'red'}}>{props.errors.email}</span>
-                    <span style={{color:'red'}}>{props.errors.password}</span>
+                    <span style={{color: 'red'}}>{props.errors.email}</span>
+                    <span style={{color: 'red'}}>{props.errors.password}</span>
                     <Button
                         type="submit"
                         fullWidth
@@ -136,8 +141,8 @@ const Login = (props) => {
                         </Grid>
                     </Grid>
                 </ValidatorForm>
-            </div>
-            <Box mt={8}>
+            </Box>
+            <Box mt={9}>
             </Box>
         </Container>
     );
