@@ -11,7 +11,7 @@ import {connect} from "react-redux";
 import {searchCarrier} from "../../servies/searchCarrier";
 import SearchCarrierModal from '../modalUI/searchCarrierModal';
 import SearchIcon from '@material-ui/icons/Search';
-import CarrierTable from './carrierTable';
+import CarrierTable from '../../asssets/carrierTable';
 
 const SearchCarrier = (props) => {
     const [company, setCompany] = useState('');
@@ -20,7 +20,6 @@ const SearchCarrier = (props) => {
     const[Info, setInfo] = React.useState(false);
     const handleInputChange = (e) => {
         setCompany(e.target.value)
-        console.log(!e.target.value.length)
         if(!e.target.value.length) {
             setInfo(false)
         }

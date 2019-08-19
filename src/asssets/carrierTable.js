@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import {uid} from 'react-uid';
 const useStyles = makeStyles(theme => ({
     root: {
-        width: '25%',
+        width: '50%',
         margin:"25px auto",
         overflowX: 'auto',
     },

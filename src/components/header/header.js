@@ -59,7 +59,7 @@ const Header = (props) => {
                 return navigation([
                     {name: 'Search carrier', link: '/searchCarrier'},
                     {name: 'Add driver', link: '/driveRegistration'},
-                    {name: 'operator3', link: '/operator3'},
+                    {name: 'All carrier', link: '/allCarrier'},
                     {name: 'operator4', link: '/operator4'}]);
             case 'controller':
                 return navigation([
