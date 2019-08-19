@@ -20,6 +20,10 @@ const SearchCarrier = (props) => {
     const[Info, setInfo] = React.useState(false);
     const handleInputChange = (e) => {
         setCompany(e.target.value)
+        console.log(!e.target.value.length)
+        if(!e.target.value.length) {
+            setInfo(false)
+        }
     };
 
     const handleModalOpen = () => {
@@ -38,8 +42,9 @@ const SearchCarrier = (props) => {
 
         searchCarrier(findCarrier)
             .then((res) => {
-                if(res.data.length < 1) {
+                if(!res.data ) {
                     handleModalOpen();
+                    setInfo(false);
                 } else {
                     setInfo(true);
                     setCarrier(res.data);
