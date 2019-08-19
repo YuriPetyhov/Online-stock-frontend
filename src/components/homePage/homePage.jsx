@@ -70,7 +70,6 @@ export default function Home() {
         <React.Fragment>
             <CssBaseline />
             <main>
-                {/* Hero unit */}
                 <div className={classes.heroContent}>
                     <Container maxWidth="sm">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
@@ -98,7 +97,6 @@ export default function Home() {
                     </Container>
                 </div>
                 <Container className={classes.cardGrid} maxWidth="md">
-                    {/* End hero unit */}
                     <Grid container spacing={4}>
                         {cards.map(card => (
                             <Grid item key={card} xs={12} sm={6} md={4}>
@@ -130,7 +128,7 @@ export default function Home() {
                     </Grid>
                 </Container>
             </main>
-            {/* Footer */}
+
             <footer className={classes.footer}>
                 <Typography variant="h6" align="center" gutterBottom>
                     Footer
@@ -140,7 +138,7 @@ export default function Home() {
                 </Typography>
                 <Copyright />
             </footer>
-            {/* End footer */}
+
         </React.Fragment>
     );
 }
