@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
@@ -23,37 +23,41 @@ const SecurityRoute = (props) => {
                 return (
                     <div>
                         <Header/>
-                        <Route path="/manager1" exact component={AdminRegister}/>
-                        <Route path="/manager2" exact component={AdminRegister}/>
-                        <Route path="/manager3" exact component={AdminRegister}/>
-                        <Route path="/manager4" exact component={AdminRegister}/>
-                        <Route component={Home}/>
-
+                        <Switch>
+                            <Route path="/manager1" exact component={AdminRegister}/>
+                            <Route path="/manager2" exact component={AdminRegister}/>
+                            <Route path="/manager3" exact component={AdminRegister}/>
+                            <Route path="/manager4" exact component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             case 'operator':
                 return (
                     <div>
                         <Header/>
-                        <Route from='/' to="/"/>
-                        <Route exact path="/searchCarrier" component={Carrier}/>
-                        <Route exact path="/driveRegistration" component={DriverRegistrer}/>
-                        <Route exact path="/operator" component={AdminRegister}/>
-                        <Route exact path="/operator3" component={AdminRegister}/>
-                        <Route exact path="/operator4" component={AdminRegister}/>
-                        <Route component={Home}/>
+                        <Switch>
+                            <Route exact path="/searchCarrier" component={Carrier}/>
+                            <Route exact path="/driveRegistration" component={DriverRegistrer}/>
+                            <Route exact path="/operator" component={AdminRegister}/>
+                            <Route exact path="/operator3" component={AdminRegister}/>
+                            <Route exact path="/operator4" component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
+
                     </div>
                 );
             case 'controller':
                 return (
                     <div>
                         <Header/>
-                        <Route from='/' to="/home"/>
-                        <Route exact path="/controller1" component={AdminRegister}/>
-                        <Route exact path="/controller2" component={AdminRegister}/>
-                        <Route exact path="/controller3" component={AdminRegister}/>
-                        <Route exact path="/controller4" component={AdminRegister}/>
-                        <Route component={Home}/>
+                        <Switch>
+                            <Route exact path="/controller1" component={AdminRegister}/>
+                            <Route exact path="/controller2" component={AdminRegister}/>
+                            <Route exact path="/controller3" component={AdminRegister}/>
+                            <Route exact path="/controller4" component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             case 'mainAdmin':
@@ -72,11 +76,13 @@ const SecurityRoute = (props) => {
                 return (
                     <div>
                         <Header/>
-                        <Route exact path="/companyAdmin1" component={AdminRegister}/>
-                        <Route exact path="/companyAdmin2" component={AdminRegister}/>
-                        <Route exact path="/companyAdmin3" component={AdminRegister}/>
-                        <Route exact path="/companyAdmin4" component={AdminRegister}/>
-                        <Route component={Home}/>
+                        <Switch>
+                            <Route exact path="/companyAdmin1" component={AdminRegister}/>
+                            <Route exact path="/companyAdmin2" component={AdminRegister}/>
+                            <Route exact path="/companyAdmin3" component={AdminRegister}/>
+                            <Route exact path="/companyAdmin4" component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             default:
