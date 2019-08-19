@@ -5,9 +5,9 @@ import {
         MuiPickersUtilsProvider
 } from "@material-ui/pickers";
 
-function App() {
-        const [selectedDate, handleDateChange] = useState(new Date());
+function App({fromDate,handleFromDateChange,toDate,handleToDateChange}) {
 
+console.log(fromDate,toDate)
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DatePicker
@@ -16,8 +16,8 @@ function App() {
                         format="dd/MM/yyyy"
                         label="from"
                         views={["year", "month", "date"]}
-                        value={selectedDate}
-                        onChange={handleDateChange}
+                        value={fromDate}
+                        onChange={handleFromDateChange}
                         style={{marginTop:'2%'}}
                     />
                     <DatePicker
@@ -26,8 +26,8 @@ function App() {
                         format="dd/MM/yyyy"
                         label="to"
                         views={["year", "month", "date"]}
-                        value={selectedDate}
-                        onChange={handleDateChange}
+                        value={toDate}
+                        onChange={handleToDateChange}
                         style={{marginTop:'7%'}}
                     />
             </MuiPickersUtilsProvider>

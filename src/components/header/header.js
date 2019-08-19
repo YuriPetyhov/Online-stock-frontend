@@ -1,7 +1,7 @@
 import React from 'react';
 import {logoutUser} from '../../actions/authenticationAction';
 
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import {connect} from "react-redux";
@@ -24,7 +24,7 @@ const Header = (props) => {
 
         const navList = linkArr.map((elem) => {
             return (
-                <Link key={elem.name} variant="button" color="primary" href={elem.link} className={classes.link}>
+                <Link key={elem.name} variant="button" color="primary" to={elem.link} className={classes.link}>
                     {elem.name}
                 </Link>)
         });

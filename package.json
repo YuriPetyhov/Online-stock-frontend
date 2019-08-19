@@ -13,6 +13,7 @@
     "bcrypt": "^3.0.6",
     "chart.js": "^2.8.0",
     "date-fns": "^2.0.0-beta.5",
+    "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
