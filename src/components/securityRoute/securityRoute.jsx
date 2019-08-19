@@ -9,10 +9,9 @@ import Login from '../loginPage/login';
 import Report from '../mainAdminReportPage/reportPage'
 import Header from '../header/header';
 import Companies from '../companiesListPage/companiesList'
-
 import Carrier from '../searchCarrier';
-
 import Landing from '../landingPage/landing'
+ import AllCarrier from '../allCarrier';
 
 
 
@@ -39,12 +38,9 @@ const SecurityRoute = (props) => {
                         <Switch>
                             <Route exact path="/searchCarrier" component={Carrier}/>
                             <Route exact path="/driveRegistration" component={DriverRegistrer}/>
-                            <Route exact path="/operator" component={AdminRegister}/>
-                            <Route exact path="/operator3" component={AdminRegister}/>
-                            <Route exact path="/operator4" component={AdminRegister}/>
+                            <Route exact path="/allCarrier" component={AllCarrier} />
                             <Route component={Home}/>
                         </Switch>
-
                     </div>
                 );
             case 'controller':
