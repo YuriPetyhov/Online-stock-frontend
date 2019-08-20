@@ -28,26 +28,22 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         width: 400,
     },
+    error:{
+        marginTop: 15,
+        color:'red'
+    },
+
     input: {
         marginLeft: 8,
         flex: 1,
     },
+
     iconButton: {
         padding: 10,
     },
-    divider: {
-        width: 1,
-        height: 28,
-        margin: 4,
-    },
+
     button: {
         margin: theme.spacing(3),
-    },
-    leftIcon: {
-        marginRight: theme.spacing(1),
-    },
-    rightIcon: {
-        marginLeft: theme.spacing(1),
     },
 }));
 
