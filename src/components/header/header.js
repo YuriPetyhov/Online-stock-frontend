@@ -45,10 +45,10 @@ const Header = (props) => {
                     {name: 'Companies', link: '/companiesList'}]);
             case 'companyAdmin':
                 return navigation([
-                    {name: 'companyAdmin1', link: '/companyAdmin1'},
+                    {name: 'Home', link: '/'},
+                    {name: 'My warehouses', link: '/myWarehouses'},
                     {name: 'companyAdmin2', link: '/companyAdmin2'},
-                    {name: 'companyAdmin3', link: '/companyAdmin3'},
-                    {name: 'companyAdmin4', link: '/companyAdmin4'}]);
+                    {name: 'companyAdmin3', link: '/companyAdmin3'}]);
             case 'manager':
                 return navigation([
                     {name: 'manager1', link: '/manager1'},
@@ -63,7 +63,7 @@ const Header = (props) => {
                     {name: 'operator4', link: '/operator4'}]);
             case 'controller':
                 return navigation([
-                    {name: 'controller1', link: '/controller1'},
+                    {name: 'My warehouses', link: '/myWarehouses'},
                     {name: 'controller2', link: '/controller2'},
                     {name: 'controller3', link: '/controller3'},
                     {name: 'controller4', link: '/controller4'}]);

@@ -78,10 +78,9 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Switch>
-                            <Route exact path="/companyAdmin1" component={AdminRegister}/>
+                            <Route exact path="/myWarehouses" component={AdminRegister}/>
                             <Route exact path="/companyAdmin2" component={AdminRegister}/>
                             <Route exact path="/companyAdmin3" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin4" component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
                         <Footer/>
