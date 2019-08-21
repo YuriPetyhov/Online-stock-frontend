@@ -24,9 +24,17 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-    dateInput: {
-        width: "100%"
+    tel: {
+        width: "100% !important",
+        padding: "26px 50px",
+        borderColor: "rgba(0, 0, 0, 0.87)",
+        background: "none !important" ,
+        border: "1px solid dimgrey !important"
     },
+    drop: {
+        background: "none !important",
+        border: "1px solid dimgrey !important",
+    }
 
 }));
 

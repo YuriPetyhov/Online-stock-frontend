@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "../searchCarrier/searchCarrierStyles";
-import {allCarriers} from "../../servies/allCarrier";
+import {allCarriers} from "../../servies/carrierServies";
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import AllCarrierTable from '../../asssets/carrierTable';
 

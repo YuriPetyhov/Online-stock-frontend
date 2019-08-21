@@ -7,7 +7,7 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import useStyles from "../searchCarrier/searchCarrierStyles";
-import {searchCarrier} from "../../servies/searchCarrier";
+import {searchCarrier} from "../../servies/carrierServies";
 import SearchIcon from '@material-ui/icons/Search';
 
 const SearchCarrier = (props) => {
@@ -26,8 +26,11 @@ const SearchCarrier = (props) => {
 
         searchCarrier(findCarrier)
             .then((res) => {
+
                 if(res.data._id ) {
                     props.history.push('/addTtn')
+                } else {
+                    props.history.push('/addCarrier')
                 }
             })
 };
@@ -47,18 +50,34 @@ const SearchCarrier = (props) => {
                 </Typography>
                 <ValidatorForm className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextValidator
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="company"
+                            label="Passport number"
+                            name="company"
+                            autoComplete="company"
+                            onChange={handleInputChange}
+                        />
+                    </Grid>
+
+                </Grid>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextValidator
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="company"
-                                label="Passport number"
-                                name="company"
-                                autoComplete="company"
+                                id="driver"
+                                label="Driver name"
+                                name="driver"
+                                autoComplete="driver"
                                 onChange={handleInputChange}
                             />
                         </Grid>
+
                     </Grid>
                     <Button
                         type="submit"
