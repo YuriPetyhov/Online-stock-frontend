@@ -8,12 +8,19 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import useStyles from "../searchCarrier/searchCarrierStyles";
 import {searchCarrier} from "../../servies/carrierServies";
+import {findDriver} from "../../servies/driverServies";
+
 import SearchIcon from '@material-ui/icons/Search';
 
 const SearchCarrier = (props) => {
     const [passport, setPassport] = useState('');
+    const [driver, setDriver] = useState('');
+
     const handleInputChange = (e) => {
         setPassport(e.target.value)
+    };
+    const handleDriverInputChange = (e) => {
+        setDriver(e.target.value)
     };
 
 
@@ -24,15 +31,23 @@ const SearchCarrier = (props) => {
             passport: passport,
         };
 
-        searchCarrier(findCarrier)
-            .then((res) => {
+        const driverLicense = {
+            license: driver,
+        };
 
-                if(res.data._id ) {
-                    props.history.push('/addTtn')
-                } else {
-                    props.history.push('/addCarrier')
-                }
-            })
+        // searchCarrier(findCarrier)
+        //     .then((res) => {
+        //
+        //         if(res.data._id ) {
+        //             props.history.push('/addTtn')
+        //         } else {
+        //             props.history.push('/addCarrier')
+        //         }
+        //     });
+
+        findDriver(driverLicense)
+            .then((res) => {console.log(res)})
+
 };
 
     const classes = useStyles();
@@ -74,7 +89,7 @@ const SearchCarrier = (props) => {
                                 label="Driver name"
                                 name="driver"
                                 autoComplete="driver"
-                                onChange={handleInputChange}
+                                onChange={handleDriverInputChange}
                             />
                         </Grid>
 
