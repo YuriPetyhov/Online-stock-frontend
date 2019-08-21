@@ -1,11 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-    '@global': {
-        body: {
-            background: 'linear-gradient(45deg, #e3d48f 30%, #66ded4 90%)',
-        },
-    },
     fab: {
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(10),

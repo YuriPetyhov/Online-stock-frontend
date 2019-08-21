@@ -8,6 +8,7 @@ import Home from '../homePage/homePage';
 import Login from '../loginPage/login';
 import Report from '../mainAdminReportPage/reportPage'
 import Header from '../header/header';
+import Footer from '../footer/footer';
 import Companies from '../companiesListPage/companiesList'
 import Carrier from '../searchCarrier';
 import Landing from '../landingPage/landing'
@@ -29,6 +30,7 @@ const SecurityRoute = (props) => {
                             <Route path="/manager4" exact component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'operator':
@@ -43,6 +45,7 @@ const SecurityRoute = (props) => {
                             <Route exact path="/addTtn" component={TtnForm} />
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'controller':
@@ -56,6 +59,7 @@ const SecurityRoute = (props) => {
                             <Route exact path="/controller4" component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'mainAdmin':
@@ -68,6 +72,7 @@ const SecurityRoute = (props) => {
                             <Route exact path="/companiesList" component={Companies}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'companyAdmin':
@@ -75,12 +80,12 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Switch>
-                            <Route exact path="/companyAdmin1" component={AdminRegister}/>
+                            <Route exact path="/myWarehouses" component={AdminRegister}/>
                             <Route exact path="/companyAdmin2" component={AdminRegister}/>
                             <Route exact path="/companyAdmin3" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin4" component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             default:
@@ -95,6 +100,7 @@ const SecurityRoute = (props) => {
                     <Route exact path="/login" component={Login}/>
                     <Route component={Landing}/>
                 </Switch>
+                <Footer/>
             </div>
         )
 

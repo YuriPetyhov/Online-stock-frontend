@@ -20,6 +20,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import 'sweetalert2/src/sweetalert2.scss'
 import useStyles from './registerAdminStyles'
+import Box from "@material-ui/core/Box";
 
 const AdminRegister = (props) => {
     const [values, setValues] = useState({
@@ -39,9 +40,7 @@ const AdminRegister = (props) => {
         setValues({...values, role:'companyAdmin',
             company:'',
             email: '',
-            password: '',
-            password_confirm:'',
-            errors: {}})
+            errors: {}});
 
         Swal.fire({
             type: 'success',
@@ -57,8 +56,6 @@ const AdminRegister = (props) => {
         const admin = {
             company:values.company,
             email: values.email,
-            password: values.password,
-            password_confirm: values.password_confirm,
             role:values.role
         };
 
@@ -91,6 +88,8 @@ const AdminRegister = (props) => {
                                 autoComplete="Company name"
                                 value={values.company}
                                 onChange={handleInputChange}
+                                validators={['required']}
+                                errorMessages={['this field is required']}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -104,43 +103,15 @@ const AdminRegister = (props) => {
                                 autoComplete="email"
                                 value={values.email}
                                 onChange={handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextValidator
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={values.password}
-                                onChange={handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextValidator
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password_confirm"
-                                label="Confirm password"
-                                type="password"
-                                id="password_confirm"
-                                autoComplete="confirm password"
-                                value={values.password_confirm}
-                                onChange={handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
+                                validators={['required', 'isEmail']}
+                                errorMessages={['this field is required', 'email is not valid']}
                             />
                         </Grid>
                     </Grid>
+                    <Box mt={1}>
+                        <span style={{color: 'red'}}>{props.errors.email}</span>
+                        <span style={{color: 'red'}}>{props.errors.password}</span>
+                    </Box>
                     <Button
                         type="submit"
                         fullWidth
@@ -148,15 +119,8 @@ const AdminRegister = (props) => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Create account
                     </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </ValidatorForm>
             </div>
         </Container>

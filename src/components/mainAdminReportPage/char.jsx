@@ -1,39 +1,66 @@
 import {Bar} from "react-chartjs-2";
 import React from "react";
+import jsPDF from 'jspdf';
+import Button from '@material-ui/core/Button';
 
-const data = {
-    labels: ['from 0 to 1'],
-    datasets: [
-        {
-            label: 'Registered',
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            data: [65,100]
-        },
+export default function Char({error, fromDate, toDate, statistic,classes}) {
 
-        {
-            label: 'Left',
-            backgroundColor: 'red',
-            data: [15,100]
-        }
+    if (statistic.created && !error) {
 
-    ],
+        const pdfCreate=(e)=>{
+            e.preventDefault();
 
-};
+            const doc = new jsPDF();
+            doc.text(
+                `
+         ************************************************************************************
+       
+           From: ${fromDate}
+                                 
+           To: ${toDate}
+                                        
+           Created accounts: ${statistic.created[0]}
+                                        
+           Deleted accounts: ${statistic.deleted[0]}
+                                    
+         ************************************************************************************
+                
+                `
+                ,1,1);
 
-export default function Char({charVisibility}) {
-    if(charVisibility) {
+            doc.save('statistic.pdf')
+        };
+
+        const data = {
+            labels: [`From ${fromDate}                      To ${toDate}`],
+            datasets: [
+                {
+                    label: 'Created',
+                    backgroundColor: 'rgba(75,192,192,0.4)',
+                    data: statistic.created
+                },
+
+                {
+                    label: 'Deleted',
+                    backgroundColor: 'red',
+                    data: statistic.deleted
+                }
+
+            ],
+
+        };
+
+
         return (
             <div>
                 <h2>Char</h2>
                 <Bar
-                    width={150}
-                    height={230}
-                    options={{
-                        maintainAspectRatio: false
-                    }}
                     data={data}/>
+                <Button variant="contained" color="secondary" className={classes.button} onClick={pdfCreate}>
+                    Download PDF
+                </Button>
             </div>
+
         )
-    }
-    else return null
+    } else return null
 }
