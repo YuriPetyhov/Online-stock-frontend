@@ -12,9 +12,9 @@ import Footer from '../footer/footer';
 import Companies from '../companiesListPage/companiesList'
 import Carrier from '../searchCarrier';
 import Landing from '../landingPage/landing'
- import AllCarrier from '../allCarrier';
-
-
+import AllCarrier from '../allCarrier';
+import TtnForm from '../ttnForm';
+import AddCarrier from "../carrierForm";
 
 const SecurityRoute = (props) => {
     if (props.auth.isAuthenticated) {
@@ -41,6 +41,8 @@ const SecurityRoute = (props) => {
                             <Route exact path="/searchCarrier" component={Carrier}/>
                             <Route exact path="/driveRegistration" component={DriverRegistrer}/>
                             <Route exact path="/allCarrier" component={AllCarrier} />
+                            <Route exact path="/addCarrier" component={AddCarrier} />
+                            <Route exact path="/addTtn" component={TtnForm} />
                             <Route component={Home}/>
                         </Switch>
                         <Footer/>

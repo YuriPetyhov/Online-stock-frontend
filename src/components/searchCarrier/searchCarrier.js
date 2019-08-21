@@ -7,46 +7,30 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import useStyles from "../searchCarrier/searchCarrierStyles";
-import {connect} from "react-redux";
-import {searchCarrier} from "../../servies/searchCarrier";
-import SearchCarrierModal from '../modalUI/searchCarrierModal';
+import {searchCarrier} from "../../servies/carrierServies";
 import SearchIcon from '@material-ui/icons/Search';
-import CarrierTable from '../../asssets/carrierTable';
 
 const SearchCarrier = (props) => {
-    const [company, setCompany] = useState('');
-    const [modalOpen, setModalOpen] = useState(false);
-    const[carrier, setCarrier] = React.useState([]);
-    const[Info, setInfo] = React.useState(false);
+    const [passport, setPassport] = useState('');
     const handleInputChange = (e) => {
-        setCompany(e.target.value)
-        if(!e.target.value.length) {
-            setInfo(false)
-        }
+        setPassport(e.target.value)
     };
 
-    const handleModalOpen = () => {
-        setModalOpen(true)
-    }
-    const handleModalClose = () => {
-        setModalOpen(false)
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const  findCarrier = {
-            company: company,
+            passport: passport,
         };
 
         searchCarrier(findCarrier)
             .then((res) => {
-                if(!res.data ) {
-                    handleModalOpen();
-                    setInfo(false);
+
+                if(res.data._id ) {
+                    props.history.push('/addTtn')
                 } else {
-                    setInfo(true);
-                    setCarrier(res.data);
+                    props.history.push('/addCarrier')
                 }
             })
 };
@@ -56,7 +40,6 @@ const SearchCarrier = (props) => {
     return (
     <React.Fragment>
         <Container component="main" maxWidth="xs">
-            {modalOpen ? <SearchCarrierModal  closeModal = {handleModalClose}/> : null}
             <CssBaseline/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -67,18 +50,34 @@ const SearchCarrier = (props) => {
                 </Typography>
                 <ValidatorForm className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextValidator
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="company"
+                            label="Passport number"
+                            name="company"
+                            autoComplete="company"
+                            onChange={handleInputChange}
+                        />
+                    </Grid>
+
+                </Grid>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextValidator
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="company"
-                                label="Search Carrier"
-                                name="company"
-                                autoComplete="company"
+                                id="driver"
+                                label="Driver name"
+                                name="driver"
+                                autoComplete="driver"
                                 onChange={handleInputChange}
                             />
                         </Grid>
+
                     </Grid>
                     <Button
                         type="submit"
@@ -92,14 +91,11 @@ const SearchCarrier = (props) => {
                 </ValidatorForm>
             </div>
         </Container>
-        {Info
-            ? (  <CarrierTable rows = { [{"company": carrier.company, "email": carrier.email, "tel": carrier.tel}] } /> )
-            : null
-        }
+
     </React.Fragment>
 
     )
 
 }
 
-export default connect(null, null)(SearchCarrier)
+export default SearchCarrier
