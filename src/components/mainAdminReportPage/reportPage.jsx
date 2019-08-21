@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 import Container from '@material-ui/core/Container';
 
@@ -19,7 +20,6 @@ const Report = (props) => {
 
     const [fromDate, setFromDate] = useState(new Date('2014-08-18T21:11:54'));
     const [toDate, setToDate] = useState(new Date());
-    const [charVisibility, setCharVisibility] = useState(false);
     const [statistic, setStatistic] = useState(props.adminCompanyStatistic);
 
     function handleCharChange() {
@@ -27,8 +27,6 @@ const Report = (props) => {
             from: fromDate,
             to: toDate
         });
-
-        setCharVisibility(true)
     }
 
     useEffect(() => {
@@ -50,15 +48,21 @@ const Report = (props) => {
                         toDate={toDate}
                         handleToDateChange={setToDate}
                     />
+                    <Box className={classes.error}>
+                        {props.errors.date}
+                    </Box>
                     <Button variant="contained" color="primary" className={classes.button} onClick={handleCharChange}>
                         Show statistic
                     </Button>
+
+
                 </Container>
                 <Char
-                    charVisibility={charVisibility}
+                    error={props.errors.date}
                     fromDate={fromDate}
                     toDate={toDate}
                     statistic={statistic}
+                    classes={classes}
                 />
             </Container>
         </React.Fragment>
