@@ -85,29 +85,6 @@ export default function Landing() {
                     </Slider>
                 </Box>
             </Container>
-            <Container maxWidth="sm" component="footer" className={classes.footer}>
-
-                <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
-                    Social links
-                </Typography>
-                <Box mt={5}>
-                    <Grid container spacing={2} justify="space-evenly">
-                        <SocialIcon url="http://facebook.com" target='_blank'/>
-                        <SocialIcon url="http://twitter.com" target='_blank'/>
-                        <SocialIcon url="https://www.instagram.com" target='_blank'/>
-                    </Grid>
-                </Box>
-                <Box mt={5}>
-                    <Typography variant="body2" color="textSecondary" align="center">
-                        {'Copyright © '}
-                        <Link color="inherit" href="https://github.com/Kvinto1986/Online-stock-frontend/">
-                            Dream Team
-                        </Link>{' '}
-                        {new Date().getFullYear()}
-                    </Typography>
-                </Box>
-            </Container>
-
         </React.Fragment>
     );
 }
