@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     formName: {
-        marginBottom: theme.spacing(5),
+        marginBottom: theme.spacing(3),
     },
 
         helperText:{
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
         },
 
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(5),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -27,11 +27,11 @@ const useStyles = makeStyles(theme => ({
     },
     form: {
         width: '100%',
-        marginTop: theme.spacing(5),
+        marginTop: theme.spacing(4),
     },
     submit: {
         width: '100%',
-        margin: theme.spacing(5, 0, 2),
+        margin: theme.spacing(4, 0, 0),
     },
 }));
 
