@@ -12,3 +12,4 @@ export const addTtn = (info) => {
         registrar: registrar
     })
 };
+

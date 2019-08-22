@@ -2,13 +2,14 @@ import axios from 'axios';
 import server from "../serverConfig";
 
 export const addCarrier = (carrier) => {
-    const{email, tel, company, passportNumber, countryCode} = carrier;
+
+    const{email, tel, company, passport, country} = carrier.carrier;
     return axios.post(`${server}api/carriers/addCarrier`, {
-        email,
-        tel,
-        company,
-        passportNumber,
-        countryCode
+        email: email,
+        tel: tel,
+        company: company,
+        passportNumber: passport,
+        countryCode: country
     })
 };
 

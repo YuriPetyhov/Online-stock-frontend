@@ -30,11 +30,10 @@ const AddCarrier = (props) => {
         const  carrierInfo = {
             carrier: carrier,
         };
-
         console.log(carrierInfo)
         addCarrier(carrierInfo)
             .then((res) => {
-                console.log(res)
+                 props.history.push('/searchCarrier')
             })
     };
 
@@ -60,8 +59,8 @@ const AddCarrier = (props) => {
                                     fullWidth
                                     id="company"
                                     label="Passport number"
-                                    name="company"
-                                    autoComplete="company"
+                                    name="passport"
+                                    autoComplete="passport"
                                     onChange={handleInputChange}
                                 />
                             </Grid>

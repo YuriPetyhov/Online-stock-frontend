@@ -10,12 +10,14 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useStyles from './ttnStyles';
 import Assignment from "@material-ui/icons/Assignment";
 import DateFnsUtils from '@date-io/date-fns';
+import {getAllSender} from "../../servies/senderServies";
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import {addTtn} from "../../servies/addTtn";
-
+import {addTtn} from "../../servies/ttn";
+import Select from "react-select";
+import {getCompaniesList, getCompany, changeStatus} from '../../actions/companyUserAction';
 const TtnForm = (props) => {
     const[ttn, setTtn] = useState({
         TTNNumber: '',
@@ -23,8 +25,21 @@ const TtnForm = (props) => {
         driver: '',
         products: ''
     });
+    const[options, setOptions] = useState([])
     const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [item, setItem] = useState(false);
 
+    useEffect(() => {
+        getAllSender()
+            .then((res) => ( setOptions(res.data) ))
+
+    }, []);
+    const handleChangeCompanyName = item => {
+        setItem(item.name)
+    };
+    const handleInputChange = (e) => {
+        setTtn({...ttn, [e.target.name]: e.target.value});
+    }
     function handleDateChange(date) {
         setSelectedDate(date);
 
@@ -43,13 +58,10 @@ const TtnForm = (props) => {
         addTtn(ttnInfo)
             .then((res) => console.log(res))
             .catch((err) => { console.error(err) } )
-    }
-
-    const handleInputChange = (e) => {
-        setTtn({...ttn, [e.target.name]: e.target.value});
-    }
+        }
 
     const classes = useStyles();
+
     return (
         <React.Fragment>
             <Container component="main" maxWidth="xs">
@@ -80,6 +92,13 @@ const TtnForm = (props) => {
                             </Grid>
 
                         </Grid>
+
+                            <Select
+                                value={item.name}
+                                onChange={handleChangeCompanyName}
+                                options={options}
+                            />
+
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -170,6 +189,6 @@ const TtnForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user.name
+    user: state.auth.user.name,
 });
 export default connect(mapStateToProps, null)(TtnForm);

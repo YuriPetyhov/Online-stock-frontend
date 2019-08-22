@@ -14,6 +14,5 @@ export const addDriver = (driver) => {
 
 export const findDriver = (data) => {
     const{license} = data;
-    console.log(license)
     return axios.get(`${server}api/drivers/${license}`)
 }

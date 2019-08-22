@@ -7,8 +7,8 @@ export const registerAdmin = (admin, reset) => dispatch => {
         .then(() => {
             reset()
             dispatch({
-                type: GET_ERRORS,
-                payload: {}
+                 type: GET_ERRORS,
+                 payload: {}
             });
         })
         .catch(err => {
