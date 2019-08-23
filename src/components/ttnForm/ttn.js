@@ -10,39 +10,53 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useStyles from './ttnStyles';
 import Assignment from "@material-ui/icons/Assignment";
 import DateFnsUtils from '@date-io/date-fns';
-import {getAllSender} from "../../servies/senderServies";
+import {getAllSender} from '../../servies/senderServies';
+import {allCarriers} from '../../servies/carrierServies';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import {addTtn} from "../../servies/ttn";
 import Select from "react-select";
-import {getCompaniesList, getCompany, changeStatus} from '../../actions/companyUserAction';
 const TtnForm = (props) => {
     const[ttn, setTtn] = useState({
         TTNNumber: '',
         date: '',
         driver: '',
-        products: ''
+        carNumber: '',
+        description: ''
     });
     const[options, setOptions] = useState([])
     const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const [item, setItem] = useState(false);
+    const [sender, setSender] = useState(false);
+    const [carrierItem, setCarrierItem] = useState(false);
+    const [carrierOptions, setCarrierOptions] = useState([]);
 
     useEffect(() => {
         getAllSender()
-            .then((res) => ( setOptions(res.data) ))
+            .then((res) => {
+                setOptions(res.data);
+            } )
 
+        allCarriers()
+            .then((res) => {
+                setCarrierOptions(res.data);
+            })
     }, []);
-    const handleChangeCompanyName = item => {
-        setItem(item.name)
+
+    const handleChangeCompanyName = e => {
+        setSender(e.value)
+    };
+    const handleChangeCarrierName = e => {
+        setCarrierItem(e.value);
+
     };
     const handleInputChange = (e) => {
         setTtn({...ttn, [e.target.name]: e.target.value});
     }
     function handleDateChange(date) {
         setSelectedDate(date);
-
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,10 +65,15 @@ const TtnForm = (props) => {
            "date": selectedDate,
            "TTNNumber": ttn.TTNNumber,
             "driver": ttn.driver,
-            "carrier": ttn.carrier,
-           "products": ttn.products,
-            "registrar": props.user
+            "carrier": carrierItem,
+            "sender": sender,
+            "registrar": props.user,
+            "productAmount": +ttn.productAmount,
+            "nameAmount": +ttn.nameAmount,
+            "description": ttn.description,
+            "carNumber": ttn.carNumber
         };
+console.log(ttnInfo)
         addTtn(ttnInfo)
             .then((res) => console.log(res))
             .catch((err) => { console.error(err) } )
@@ -78,11 +97,11 @@ const TtnForm = (props) => {
                             <Grid item xs={12}>
                                 <TextValidator
                                     type="number"
-                                    className={classes.input_ttn}
+                                    className="noNumerical"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="number"
+                                    id="ttnNumber"
                                     label="TTN number"
                                     name="TTNNumber"
                                     autoComplete="TTNNumber"
@@ -92,13 +111,16 @@ const TtnForm = (props) => {
                             </Grid>
 
                         </Grid>
-
-                            <Select
-                                value={item.name}
-                                onChange={handleChangeCompanyName}
-                                options={options}
-                            />
-
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Select
+                                    placeholder="Sender"
+                                    onChange={handleChangeCompanyName}
+                                    options={options}
+                                    className={classes.select}
+                                />
+                            </Grid>
+                        </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -122,22 +144,33 @@ const TtnForm = (props) => {
                             </Grid>
                         </Grid>
 
-                        <Grid container spacing={2}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextValidator
-                                className=""
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="info_about_carrier"
-                                label="Carrier"
-                                name="carrier"
-                                autoComplete="carrier"
-                                onChange={handleInputChange}
+                            <Select
+                                placeholder="Carrier"
+                                onChange={handleChangeCarrierName}
+                                options={carrierOptions}
+                                className={classes.select}
                             />
                         </Grid>
 
                     </Grid>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextValidator
+
+                                    className="noNumerical"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="info_about_сфк"
+                                    label="Car Number"
+                                    name="carNumber"
+                                    autoComplete="car"
+                                    onChange={handleInputChange}
+                                />
+                            </Grid>
+                        </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextValidator
@@ -154,22 +187,44 @@ const TtnForm = (props) => {
                             </Grid>
 
                         </Grid>
-
                         <Grid container spacing={2}>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <TextValidator
-                                    className=""
+                                    type='number'
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="info_about_carrier"
-                                    label="Products"
-                                    name="products"
+                                    id="info-product-amount"
+                                    label="Product amount"
+                                    name="productAmount"
                                     autoComplete="carrier"
                                     onChange={handleInputChange}
                                 />
                             </Grid>
-
+                            <Grid item xs={6}>
+                                <TextValidator
+                                    type='number'
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="info-name-amount"
+                                    label="Name amount"
+                                    name="nameAmount"
+                                    autoComplete="carrier"
+                                    onChange={handleInputChange}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextareaAutosize
+                                    className={classes.description}
+                                    defaultValue="Description"
+                                    rows={5}
+                                    name='description'
+                                    onChange={handleInputChange}
+                                />
+                            </Grid>
                         </Grid>
                         <Button
                             type="submit"
