@@ -95,6 +95,7 @@ const SearchCarrier = (props) => {
                     <Grid item xs={12}>
                         <TextValidator
                             type="number"
+                            className="noNumerical"
                             variant="outlined"
                             required
                             fullWidth

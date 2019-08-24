@@ -18,6 +18,10 @@ export const searchCarrier = (carrier) => {
     return  axios.get(`${server}api/carriers/${passport}`)
 };
 
-export const allCarriers = (carrier) => {
+export const listCarriers = (carrier) => {
     return axios.get(`${server}api/carriers`)
+};
+
+export const allCarriers = () => {
+    return axios.get(`${server}api/carriers/all`)
 };

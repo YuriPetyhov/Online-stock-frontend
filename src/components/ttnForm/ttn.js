@@ -11,7 +11,7 @@ import useStyles from './ttnStyles';
 import Assignment from "@material-ui/icons/Assignment";
 import DateFnsUtils from '@date-io/date-fns';
 import {getAllSender} from '../../servies/senderServies';
-import {allCarriers} from '../../servies/carrierServies';
+import {listCarriers} from '../../servies/carrierServies';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {
     MuiPickersUtilsProvider,
@@ -39,7 +39,7 @@ const TtnForm = (props) => {
                 setOptions(res.data);
             } )
 
-        allCarriers()
+        listCarriers()
             .then((res) => {
                 setCarrierOptions(res.data);
             })
