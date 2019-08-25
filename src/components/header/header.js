@@ -1,14 +1,14 @@
 import React from 'react';
 import {logoutUser} from '../../actions/authenticationAction';
 
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import {connect} from "react-redux";
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
+import Account from '../../resources/images/baseline-account_box-24px.svg'
 import useStyles from './headerStyles'
 
 const Header = (props) => {
@@ -24,7 +24,7 @@ const Header = (props) => {
 
         const navList = linkArr.map((elem) => {
             return (
-                <Link key={elem.name} variant="button" color="textPrimary" href={elem.link} className={classes.link}>
+                <Link key={elem.name} variant="button" color="primary" to={elem.link} className={classes.link}>
                     {elem.name}
                 </Link>)
         });
@@ -57,8 +57,8 @@ const Header = (props) => {
                     {name: 'manager4', link: '/manager4'}]);
             case 'operator':
                 return navigation([
-                    {name: 'operator1', link: '/operator1'},
-                    {name: 'operator2', link: '/operator2'},
+                    {name: 'Search carrier', link: '/searchCarrier'},
+                    {name: 'Add driver', link: '/driveRegistration'},
                     {name: 'operator3', link: '/operator3'},
                     {name: 'operator4', link: '/operator4'}]);
             case 'controller':
@@ -76,14 +76,20 @@ const Header = (props) => {
     return (
         <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
             <Toolbar className={classes.toolbar}>
-                <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                <Typography variant="h6" color="primary" noWrap className={classes.toolbarTitle}>
                     Company name
                 </Typography>
                 <NavigationBar
                 />
+
+                <img src={Account} className={classes.icon}/>
+                <Typography variant="h6" color="inherit" noWrap>
+                    {props.auth.user.email}
+                </Typography>
                 <Button color="primary" variant="outlined" className={classes.link} onClick={logout}>
                     Logout
                 </Button>
+
             </Toolbar>
         </AppBar>
     );

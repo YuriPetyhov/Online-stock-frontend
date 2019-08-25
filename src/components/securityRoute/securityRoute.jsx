@@ -1,5 +1,5 @@
-import React from 'react';
-import {Router, Route} from 'react-router-dom';
+ import React from 'react';
+import {Router, Route, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import AdminRegister from "../registerAdmin/registerAdmin";
@@ -10,6 +10,11 @@ import Report from '../mainAdminReportPage/reportPage'
 import Header from '../header/header';
 import Companies from '../companiesListPage/companiesList'
 
+import Carrier from '../searchCarrier';
+
+import Landing from '../landingPage/landing'
+
+
 
 const SecurityRoute = (props) => {
     if (props.auth.isAuthenticated) {
@@ -18,58 +23,66 @@ const SecurityRoute = (props) => {
                 return (
                     <div>
                         <Header/>
-                        <Route path="/manager1" exact component={AdminRegister}/>
-                        <Route path="/manager2" exact component={AdminRegister}/>
-                        <Route path="/manager3" exact component={AdminRegister}/>
-                        <Route path="/manager4" exact component={AdminRegister}/>
-                        <Route exact path="/home" component={Home}/>
-
+                        <Switch>
+                            <Route path="/manager1" exact component={AdminRegister}/>
+                            <Route path="/manager2" exact component={AdminRegister}/>
+                            <Route path="/manager3" exact component={AdminRegister}/>
+                            <Route path="/manager4" exact component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             case 'operator':
                 return (
                     <div>
                         <Header/>
-                        <Route exact path="/operator1" component={AdminRegister}/>
-                        <Route from='/' to="/"/>
-                        <Route exact path="/driveRegistration" component={DriverRegistrer}/>
-                        <Route exact path="/operator2" component={AdminRegister}/>
-                        <Route exact path="/operator3" component={AdminRegister}/>
-                        <Route exact path="/operator4" component={AdminRegister}/>
-                        <Route exact path="/home" component={Home}/>
+                        <Switch>
+                            <Route exact path="/searchCarrier" component={Carrier}/>
+                            <Route exact path="/driveRegistration" component={DriverRegistrer}/>
+                            <Route exact path="/operator" component={AdminRegister}/>
+                            <Route exact path="/operator3" component={AdminRegister}/>
+                            <Route exact path="/operator4" component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
+
                     </div>
                 );
             case 'controller':
                 return (
                     <div>
                         <Header/>
-                        <Route from='/' to="/home"/>
-                        <Route exact path="/controller1" component={AdminRegister}/>
-                        <Route exact path="/controller2" component={AdminRegister}/>
-                        <Route exact path="/controller3" component={AdminRegister}/>
-                        <Route exact path="/controller4" component={AdminRegister}/>
-                        <Route exact path="/home" component={Home}/>
+                        <Switch>
+                            <Route exact path="/controller1" component={AdminRegister}/>
+                            <Route exact path="/controller2" component={AdminRegister}/>
+                            <Route exact path="/controller3" component={AdminRegister}/>
+                            <Route exact path="/controller4" component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             case 'mainAdmin':
                 return (
                     <div>
                         <Header/>
-                        <Route exact path="/newCompanyAdmin" component={AdminRegister}/>
-                        <Route exact path="/reports" component={Report}/>
-                        <Route exact path="/companiesList" component={Companies}/>
-                        <Route exact path="/" component={Home}/>
+                        <Switch>
+                            <Route exact path="/newCompanyAdmin" component={AdminRegister}/>
+                            <Route exact path="/reports" component={Report}/>
+                            <Route exact path="/companiesList" component={Companies}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             case 'companyAdmin':
                 return (
                     <div>
                         <Header/>
-                        <Route exact path="/companyAdmin1" component={AdminRegister}/>
-                        <Route exact path="/companyAdmin2" component={AdminRegister}/>
-                        <Route exact path="/companyAdmin3" component={AdminRegister}/>
-                        <Route exact path="/companyAdmin4" component={AdminRegister}/>
-                        <Route exact path="/home" component={Home}/>
+                        <Switch>
+                            <Route exact path="/companyAdmin1" component={AdminRegister}/>
+                            <Route exact path="/companyAdmin2" component={AdminRegister}/>
+                            <Route exact path="/companyAdmin3" component={AdminRegister}/>
+                            <Route exact path="/companyAdmin4" component={AdminRegister}/>
+                            <Route component={Home}/>
+                        </Switch>
                     </div>
                 );
             default:
@@ -80,8 +93,10 @@ const SecurityRoute = (props) => {
         return (
 
             <div>
-                <Route exact path="/" component={Login}/>
-                <Redirect from='*' to="/"/>
+                <Switch>
+                    <Route exact path="/login" component={Login}/>
+                    <Route component={Landing}/>
+                </Switch>
             </div>
         )
 

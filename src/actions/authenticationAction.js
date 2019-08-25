@@ -22,7 +22,7 @@ export const loginUser = (user, reset) => dispatch => {
             dispatch({
                 type: GET_ERRORS,
                 payload: {}
-            })
+            });
             reset()
         })
         .catch(err => {
