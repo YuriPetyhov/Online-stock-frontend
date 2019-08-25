@@ -90,8 +90,8 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(company, email, tel) {
-    return { company, email, tel };
+function createData(company, email, tel, id) {
+    return { company, email, tel, id };
 }
 
 const useStyles2 = makeStyles(theme => ({
@@ -128,20 +128,27 @@ export default function CustomPaginationActionsTable() {
     useEffect(() => {
         allCarriers()
             .then((res) => {
+
                 const fetchArr = []
-                res.data.forEach(item => fetchArr.push( ( createData(item.company, item.email, item.tel) )));
+                res.data.forEach(item => fetchArr.push( ( createData(item.company, item.email, item.tel, item._id) )));
                 setRows(fetchArr);
+
             })
             .catch((err) => console.error(err))
 
-    },[])
+    },[]);
 
+   const removeItem = (e) => {
+       const{id} = e.target;
+       const newArr = rows.filter((item) => item.id != id);
+        setRows(newArr)
+   }
 
     return (
+
         <Paper className={classes.root}>
             <div className={classes.tableWrapper}>
                 <Table className={classes.table}>
-
                     <TableBody>
                         <TableRow>
                             <TableCell>Carrier</TableCell>
@@ -150,17 +157,19 @@ export default function CustomPaginationActionsTable() {
                             <TableCell align="right"></TableCell>
                         </TableRow>
                         {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                            <TableRow key={row.company}>
+
+                            <TableRow key={row.id}>
                                 <TableCell component="th" scope="row">
                                     {row.company}
                                 </TableCell>
                                 <TableCell align="right">{row.email}</TableCell>
                                 <TableCell align="right">{row.tel}</TableCell>
                                 <TableCell align="right">
-                                    <Fab onClick={(e) => {console.log()}} color="secondary" aria-label="edit" className={classes.fab}>
+                                    <Fab color="secondary" aria-label="edit" className={classes.fab}>
                                         <EditIcon />
                                     </Fab>
-                                    <Fab  aria-label="delete" className={classes.fab}>
+                                    //TODO will add remove from datebase
+                                    <Fab id ={row.id} onClick={removeItem} aria-label="delete" className={classes.fab}>
                                         <DeleteIcon />
                                     </Fab>
                                 </TableCell>
