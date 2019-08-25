@@ -13,6 +13,12 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import NavigationIcon from '@material-ui/icons/Navigation';
+
 import {allCarriers} from "../../servies/carrierServies";
 
 const useStyles1 = makeStyles(theme => ({
@@ -21,6 +27,9 @@ const useStyles1 = makeStyles(theme => ({
         color: theme.palette.text.secondary,
         marginLeft: theme.spacing(2.5),
     },
+    extendedIcon: {
+        marginRight: theme.spacing(1),
+    }
 }));
 
 function TablePaginationActions(props) {
@@ -138,6 +147,7 @@ export default function CustomPaginationActionsTable() {
                             <TableCell>Carrier</TableCell>
                             <TableCell align="right">Email.</TableCell>
                             <TableCell align="right">Phone</TableCell>
+                            <TableCell align="right"></TableCell>
                         </TableRow>
                         {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                             <TableRow key={row.company}>
@@ -146,7 +156,15 @@ export default function CustomPaginationActionsTable() {
                                 </TableCell>
                                 <TableCell align="right">{row.email}</TableCell>
                                 <TableCell align="right">{row.tel}</TableCell>
-                            </TableRow>
+                                <TableCell align="right">
+                                    <Fab onClick={(e) => {console.log()}} color="secondary" aria-label="edit" className={classes.fab}>
+                                        <EditIcon />
+                                    </Fab>
+                                    <Fab  aria-label="delete" className={classes.fab}>
+                                        <DeleteIcon />
+                                    </Fab>
+                                </TableCell>
+                             </TableRow>
                         ))}
 
                         {emptyRows > 0 && (
