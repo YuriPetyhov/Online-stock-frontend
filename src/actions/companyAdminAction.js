@@ -5,10 +5,10 @@ import server from '../serverConfig'
 export const registerAdmin = (admin, reset) => dispatch => {
     axios.post(`${server}api/admins/registration`, admin)
         .then(() => {
-            reset()
+            reset();
             dispatch({
-                type: GET_ERRORS,
-                payload: {}
+                 type: GET_ERRORS,
+                 payload: {}
             });
         })
         .catch(err => {
