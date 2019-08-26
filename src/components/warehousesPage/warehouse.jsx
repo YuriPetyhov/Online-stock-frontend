@@ -73,12 +73,13 @@ export default function NavTabs() {
                     aria-label="nav tabs example"
                     indicatorColor="secondary"
                 >
-                    <LinkTab label="Create new warehouse" href="/drafts" {...a11yProps(0)} />
-                    <LinkTab label="Warehouses list" href="/trash" {...a11yProps(1)} />
+                    <LinkTab label="Create new warehouse" href="/form" {...a11yProps(0)} />
+                    <LinkTab label="Warehouses list" href="/list" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <Form/>
+                <Form
+                />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <List/>

@@ -21,8 +21,6 @@ import useStyles from './registerUserStyles'
 
 const Form = ({props}) => {
 
-    console.log(props)
-
     const [form, setForm] = useState({
         firstName: '',
         lastName: '',
@@ -56,7 +54,7 @@ const Form = ({props}) => {
             title: 'Congratulations!',
             text: 'User registration was successful !',
             allowOutsideClick: false
-        }).then(()=>{
+        }).then(() => {
             window.location.reload()
         })
     };
@@ -75,10 +73,10 @@ const Form = ({props}) => {
             apartment: form.apartment,
             role: form.role,
             dateOfBirth: dateOfBirth,
-            company:props.auth.user.company
+            company: props.auth.user.company
         };
 
-        props.registerUser(user,reset)
+        props.registerUser(user, reset)
     };
 
     return (
@@ -249,6 +247,6 @@ const Form = ({props}) => {
             </Grid>
         </ValidatorForm>
     )
-}
+};
 
 export default Form
