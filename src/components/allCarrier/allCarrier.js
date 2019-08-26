@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,23 +18,15 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import NavigationIcon from '@material-ui/icons/Navigation';
-
+import TextField from '@material-ui/core/TextField';
+import useStyles from './allCarrierStyle';
 import {allCarriers, deleteCarriers} from "../../servies/carrierServies";
+import {addPrevPath} from '../../actions/carrierAction';
+import Spinner from '../spinner'
 
-const useStyles1 = makeStyles(theme => ({
-    root: {
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing(2.5),
-    },
-    extendedIcon: {
-        marginRight: theme.spacing(1),
-    }
-}));
 
 function TablePaginationActions(props) {
-    const classes = useStyles1();
+    const classes = useStyles();
     const theme = useTheme();
     const { count, page, rowsPerPage, onChangePage } = props;
 
@@ -54,7 +47,7 @@ function TablePaginationActions(props) {
     }
 
     return (
-        <div className={classes.root}>
+        <div className={classes.nav}>
             <IconButton
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
@@ -94,32 +87,21 @@ function createData(company, email, tel, id) {
     return { company, email, tel, id };
 }
 
-const useStyles2 = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing(3),
-    },
-    table: {
-        minWidth: 500,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-}));
-
-export default function CustomPaginationActionsTable() {
+  function CustomPaginationActionsTable(props) {
     const[rows, setRows] = useState([]);
-
-    const classes = useStyles2();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+    const classes = useStyles();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const[loaded, setLoaded] = useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     function handleChangePage(event, newPage) {
         setPage(newPage);
     }
-
+const handlePrevPath  = () => {
+    props.addPrevPath(props.location.pathname);
+    //props.history.push("/addCarrier")
+}
     function handleChangeRowsPerPage(event) {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -128,14 +110,12 @@ export default function CustomPaginationActionsTable() {
     useEffect(() => {
         allCarriers()
             .then((res) => {
-
                 const fetchArr = [];
                 res.data.forEach(item => fetchArr.push( ( createData(item.company, item.email, item.tel, item._id) )));
                 setRows(fetchArr);
-
+                setLoaded(true)
             })
             .catch((err) => console.error(err))
-
     },[]);
 
    const removeItem = (e) => {
@@ -143,15 +123,25 @@ export default function CustomPaginationActionsTable() {
        const newArr = rows.filter((item) => item.id != id);
        deleteCarriers(id)
            .then((res) => {
-               console.log(res);
                setRows(newArr);
+
            })
            .catch((err) => {console.error(err)})
 
    }
-
     return (
-
+        <>
+        <div className={classes.add_carrier}>
+            <span>Add new carrier</span>
+            <Fab
+                color="primary"
+                aria-label="add"
+                className={classes.add_btn}
+                onClick={ handlePrevPath}
+            >
+                <AddIcon />
+            </Fab>
+        </div>
         <Paper className={classes.root}>
             <div className={classes.tableWrapper}>
                 <Table className={classes.table}>
@@ -162,31 +152,44 @@ export default function CustomPaginationActionsTable() {
                             <TableCell align="right">Phone</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                    {row.company}
-                                </TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-                                <TableCell align="right">{row.tel}</TableCell>
-                                <TableCell align="right">
-                                    <Fab disabled color="secondary" aria-label="edit" className={classes.fab}>
-                                        <EditIcon />
-                                    </Fab>
-                                    <Fab id ={row.id} onClick={removeItem} aria-label="delete" className={classes.fab}>
-                                        <DeleteIcon />
-                                    </Fab>
-                                </TableCell>
-                             </TableRow>
-                        ))}
+                        {!loaded
+                            ? <Spinner/>
+                            :  rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+                                    <TableRow key={row.id}>
+                                        <TableCell component="th" scope="row">
+                                            {row.company}
+                                        </TableCell>
+                                        <TableCell align="right">{row.email}</TableCell>
+                                        <TableCell align="right">{row.tel}</TableCell>
+                                        <TableCell align="right">
+                                            <Fab
+                                                disabled
+                                                color="secondary"
+                                                aria-label="edit"
+                                                className={classes.fab}
+                                               >
+                                                <EditIcon   />
+                                            </Fab>
+                                            <Fab
+                                                id ={row.id}
+                                                onClick={removeItem}
+                                                aria-label="delete"
+                                                className={classes.fab}
+                                            >
+                                                <DeleteIcon />
+                                            </Fab>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                        }
 
                         {emptyRows > 0 && (
-                            <TableRow style={{ height: 48 * emptyRows }}>
+                            <TableRow style={{ height: 35 * emptyRows }}>
                                 <TableCell colSpan={6} />
                             </TableRow>
                         )}
                     </TableBody>
+                    <TableRow>добавить запись </TableRow>
                     <TableFooter>
                         <TableRow>
                             <TablePagination
@@ -208,5 +211,8 @@ export default function CustomPaginationActionsTable() {
                 </Table>
             </div>
         </Paper>
+    </>
     );
 }
+
+export default connect(null, {addPrevPath})(CustomPaginationActionsTable)
