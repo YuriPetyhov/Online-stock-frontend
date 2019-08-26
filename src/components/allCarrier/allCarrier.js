@@ -19,7 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NavigationIcon from '@material-ui/icons/Navigation';
 
-import {allCarriers} from "../../servies/carrierServies";
+import {allCarriers, deleteCarriers} from "../../servies/carrierServies";
 
 const useStyles1 = makeStyles(theme => ({
     root: {
@@ -129,7 +129,7 @@ export default function CustomPaginationActionsTable() {
         allCarriers()
             .then((res) => {
 
-                const fetchArr = []
+                const fetchArr = [];
                 res.data.forEach(item => fetchArr.push( ( createData(item.company, item.email, item.tel, item._id) )));
                 setRows(fetchArr);
 
@@ -141,7 +141,13 @@ export default function CustomPaginationActionsTable() {
    const removeItem = (e) => {
        const{id} = e.target;
        const newArr = rows.filter((item) => item.id != id);
-        setRows(newArr)
+       deleteCarriers(id)
+           .then((res) => {
+               console.log(res);
+               setRows(newArr);
+           })
+           .catch((err) => {console.error(err)})
+
    }
 
     return (
@@ -165,10 +171,9 @@ export default function CustomPaginationActionsTable() {
                                 <TableCell align="right">{row.email}</TableCell>
                                 <TableCell align="right">{row.tel}</TableCell>
                                 <TableCell align="right">
-                                    <Fab color="secondary" aria-label="edit" className={classes.fab}>
+                                    <Fab disabled color="secondary" aria-label="edit" className={classes.fab}>
                                         <EditIcon />
                                     </Fab>
-                                    //TODO will add remove from datebase
                                     <Fab id ={row.id} onClick={removeItem} aria-label="delete" className={classes.fab}>
                                         <DeleteIcon />
                                     </Fab>
@@ -185,7 +190,7 @@ export default function CustomPaginationActionsTable() {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
+                                rowsPerPageOptions={[5, 10]}
                                 colSpan={3}
                                 count={rows.length}
                                 rowsPerPage={rowsPerPage}
