@@ -15,7 +15,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import Moment from 'react-moment';
 
 import 'sweetalert2/src/sweetalert2.scss'
-import {getCompaniesList, getCompany, changeStatus} from '../../actions/companyUserAction';
+import {getCompaniesList, getCompany, changeStatus} from '../../actions/companyAdminAction';
 
 const Companies = (props) => {
     const classes = useStyles();

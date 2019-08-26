@@ -1,7 +1,7 @@
 import React from 'react';
 import {logoutUser} from '../../actions/authenticationAction';
 
-import Link from '../Link';
+import Link from './Link';
 import Button from '@material-ui/core/Button';
 
 import {connect} from "react-redux";
@@ -47,8 +47,7 @@ const Header = (props) => {
                 return navigation([
                     {name: 'Home', link: '/'},
                     {name: 'My warehouses', link: '/myWarehouses'},
-                    {name: 'companyAdmin2', link: '/companyAdmin2'},
-                    {name: 'companyAdmin3', link: '/companyAdmin3'}]);
+                    {name: 'Create new user', link: '/createUser'}]);
             case 'manager':
                 return navigation([
                     {name: 'manager1', link: '/manager1'},

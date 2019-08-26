@@ -13,7 +13,7 @@ import DataInput from './dataInput'
 import Char from './char'
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getStatistic} from "../../actions/companyUserAction";
+import {getStatistic} from "../../actions/companyAdminAction";
 
 const Report = (props) => {
     const classes = useStyles();

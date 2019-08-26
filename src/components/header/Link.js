@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Link from '@material-ui/core/Link'
+import Link from '@material-ui/core/Link/index'
 import {Link as RouterLink} from 'react-router-dom'
 
 class MyRouterLink extends Component {

@@ -3,6 +3,8 @@ import {Router, Route, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import AdminRegister from "../registerAdmin/registerAdmin";
+import Warehouse from "../warehousesPage/warehouse";
+import UserForm from "../registerUsers/registerUser";
 import DriverRegistrer from '../registerDrive';
 import Home from '../homePage/homePage';
 import Login from '../loginPage/login';
@@ -80,9 +82,8 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Switch>
-                            <Route exact path="/myWarehouses" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin2" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin3" component={AdminRegister}/>
+                            <Route exact path="/myWarehouses" component={Warehouse}/>
+                            <Route exact path="/createUser" component={UserForm}/>
                             <Route component={Home}/>
                         </Switch>
                         <Footer/>
