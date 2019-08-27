@@ -16,6 +16,7 @@ import Landing from '../landingPage/landing'
 import AllCarrier from '../allCarrier';
 import TtnForm from '../ttnForm';
 import AddCarrier from "../carrierForm";
+import DeliveryFromStockForm from '../deliveryFromStock/deliveryFromStock'
 
 const SecurityRoute = (props) => {
     if (props.auth.isAuthenticated) {
@@ -25,10 +26,10 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Switch>
-                            <Route path="/manager1" exact component={AdminRegister}/>
-                            <Route path="/manager2" exact component={AdminRegister}/>
-                            <Route path="/manager3" exact component={AdminRegister}/>
-                            <Route path="/manager4" exact component={AdminRegister}/>
+                            <Route exact path="/stockDelivery" component={DeliveryFromStockForm}/>
+                            <Route exact path="/manager2" component={AdminRegister}/>
+                            <Route exact path="/manager3" component={AdminRegister}/>
+                            <Route exact path="/manager4" component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
                         <Footer/>

@@ -51,7 +51,7 @@ const Header = (props) => {
                     {name: 'companyAdmin3', link: '/companyAdmin3'}]);
             case 'manager':
                 return navigation([
-                    {name: 'manager1', link: '/manager1'},
+                    {name: 'Stock delivery', link: '/stockDelivery'},
                     {name: 'manager2', link: '/manager2'},
                     {name: 'manager3', link: '/manager3'},
                     {name: 'manager4', link: '/manager4'}]);
