@@ -27,6 +27,5 @@ export const allCarriers = () => {
 };
 
 export const deleteCarriers = (id) => {
-    console.log(id)
     return axios.delete(`${server}api/carriers/${id}`)
 };
