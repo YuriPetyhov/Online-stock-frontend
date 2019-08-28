@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {useTheme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,25 +18,18 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import NavigationIcon from '@material-ui/icons/Navigation';
+import TextField from '@material-ui/core/TextField';
+import useStyles from './allCarrierStyle';
+import {allCarriers, deleteCarriers, updateCarrier} from "../../servies/carrierServies";
+import {addPrevPath} from '../../actions/carrierAction';
+import Spinner from '../spinner';
 
-import {allCarriers, deleteCarriers} from "../../servies/carrierServies";
 
-const useStyles1 = makeStyles(theme => ({
-    root: {
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing(2.5),
-    },
-    extendedIcon: {
-        marginRight: theme.spacing(1),
-    }
-}));
 
 function TablePaginationActions(props) {
-    const classes = useStyles1();
+    const classes = useStyles();
     const theme = useTheme();
-    const { count, page, rowsPerPage, onChangePage } = props;
+    const {count, page, rowsPerPage, onChangePage} = props;
 
     function handleFirstPageButtonClick(event) {
         onChangePage(event, 0);
@@ -54,30 +48,30 @@ function TablePaginationActions(props) {
     }
 
     return (
-        <div className={classes.root}>
+        <div className={classes.nav}>
             <IconButton
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+                {theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}
             </IconButton>
             <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="next page"
             >
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+                {theme.direction === 'rtl' ? <FirstPageIcon/> : <LastPageIcon/>}
             </IconButton>
         </div>
     );
@@ -90,34 +84,26 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(company, email, tel, id) {
-    return { company, email, tel, id };
+function createData({...rest}) {
+    return {...rest};
 }
 
-const useStyles2 = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing(3),
-    },
-    table: {
-        minWidth: 500,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-}));
-
-export default function CustomPaginationActionsTable() {
-    const[rows, setRows] = useState([]);
-
-    const classes = useStyles2();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+function CustomPaginationActionsTable(props) {
+    const [rows, setRows] = useState([]);
+    const classes = useStyles();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [loaded, setLoaded] = useState(false);
+    const [inputValue, setInputValue] = useState({})
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     function handleChangePage(event, newPage) {
         setPage(newPage);
+    }
+
+    const handlePrevPath = () => {
+        props.addPrevPath(props.location.pathname);
+        //props.history.push("/addCarrier")
     }
 
     function handleChangeRowsPerPage(event) {
@@ -128,85 +114,196 @@ export default function CustomPaginationActionsTable() {
     useEffect(() => {
         allCarriers()
             .then((res) => {
-
                 const fetchArr = [];
-                res.data.forEach(item => fetchArr.push( ( createData(item.company, item.email, item.tel, item._id) )));
+                res.data.forEach(item => fetchArr.push((createData(item))));
                 setRows(fetchArr);
-
+                setLoaded(true)
             })
             .catch((err) => console.error(err))
+    }, []);
 
-    },[]);
+    const removeItem = (id) => {
 
-   const removeItem = (e) => {
-       const{id} = e.target;
-       const newArr = rows.filter((item) => item.id != id);
-       deleteCarriers(id)
-           .then((res) => {
-               console.log(res);
-               setRows(newArr);
-           })
-           .catch((err) => {console.error(err)})
+        console.log(id)
+        const newArr = rows.filter((item) => item._id != id);
+        deleteCarriers(id)
+            .then((res) => {
+                setRows(newArr);
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+    };
+    const handleEdit = (id) => {
+        rows.forEach((item, indx) => {
+            rows[indx].isDisabled = false;
+        });
+        let found = rows.find((elem, index) => {
+            return elem._id === id
+        });
 
-   }
+        found.isDisabled = true
+        setRows([...rows, found])
+    };
+
+    const handelEditInput = (e) => {
+        setInputValue({...inputValue, [e.target.name]: e.target.value})
+    }
+
+    const handleNewCarrier = (id) => {
+        let indx;
+        let found = rows.find((elem, index) => {
+            if(elem._id === id) {
+                indx = index;
+                return elem
+            }
+        });
+        const{carrier, email, tel} = inputValue;
+
+        if (!!carrier) {
+            found.company = carrier
+        }
+
+        if(!!email) {
+            found.email = email
+        }
+
+        if(!!tel) {
+            found.tel = tel
+        }
+
+      found.isDisabled = false;
+
+      setRows([...rows, found])
+        updateCarrier(found)
+    }
 
     return (
-
-        <Paper className={classes.root}>
-            <div className={classes.tableWrapper}>
-                <Table className={classes.table}>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>Carrier</TableCell>
-                            <TableCell align="right">Email.</TableCell>
-                            <TableCell align="right">Phone</TableCell>
-                            <TableCell align="right"></TableCell>
-                        </TableRow>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                    {row.company}
-                                </TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-                                <TableCell align="right">{row.tel}</TableCell>
-                                <TableCell align="right">
-                                    <Fab disabled color="secondary" aria-label="edit" className={classes.fab}>
-                                        <EditIcon />
-                                    </Fab>
-                                    <Fab id ={row.id} onClick={removeItem} aria-label="delete" className={classes.fab}>
-                                        <DeleteIcon />
-                                    </Fab>
-                                </TableCell>
-                             </TableRow>
-                        ))}
-
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 48 * emptyRows }}>
-                                <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10]}
-                                colSpan={3}
-                                count={rows.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                SelectProps={{
-                                    inputProps: { 'aria-label': 'rows per page' },
-                                    native: true,
-                                }}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
+        <>
+            <div className={classes.add_carrier}>
+                <span>Add new carrier</span>
+                <Fab
+                    color="primary"
+                    aria-label="add"
+                    className={classes.add_btn}
+                    onClick={handlePrevPath}
+                >
+                    <AddIcon/>
+                </Fab>
             </div>
-        </Paper>
+            <Paper className={classes.root}>
+                <div className={classes.tableWrapper}>
+                    <Table className={classes.table}>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>Carrier</TableCell>
+                                <TableCell align="right">Email.</TableCell>
+                                <TableCell align="right">Phone</TableCell>
+                                <TableCell align="right"></TableCell>
+                            </TableRow>
+                            {!loaded
+                                ? <Spinner/>
+                                : rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell component="th" scope="row">
+                                            {
+                                                row.isDisabled
+                                                    ? <input
+                                                        type="text"
+                                                        name='carrier'
+                                                        placeholder={row.company}
+                                                        onChange={handelEditInput}
+                                                    />
+                                                    : <span>{row.company}</span>
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                row.isDisabled
+                                                    ? <input type="text" name='email' placeholder={row.email}
+                                                             onChange={handelEditInput}/>
+                                                    : <span>{row.email}</span>
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                row.isDisabled
+                                                    ? <input
+                                                        type="number"
+                                                        name='tel'
+                                                        placeholder={row.tel}
+                                                        onChange={handelEditInput}
+                                                        className="noNumerical"
+                                                    />
+                                                    : <span>{row.tel}</span>
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {row.isDisabled
+                                                ? <Fab
+                                                    color="primary"
+                                                    aria-label="add"
+                                                    className={classes.add_btn}
+                                                    onClick={ (e) => {handleNewCarrier(row._id)} }
+                                                >
+                                                    <AddIcon/>
+                                                </Fab>
+
+                                                : <Fab
+                                                    color="secondary"
+                                                    aria-label="edit"
+                                                    className={classes.fab}
+                                                    onClick={() => {
+                                                        handleEdit(row._id)
+                                                    }}
+                                                >
+                                                    <EditIcon/>
+                                                </Fab>
+
+                                            }
+
+                                            <Fab
+                                                id={row.id}
+                                                onClick={() => {removeItem(row._id)} }
+                                                aria-label="delete"
+                                                className={classes.fab}
+                                            >
+                                                <DeleteIcon/>
+                                            </Fab>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            }
+
+                            {emptyRows > 0 && (
+                                <TableRow style={{height: 35 * emptyRows}}>
+                                    <TableCell colSpan={6}/>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    rowsPerPageOptions={[5, 10]}
+                                    colSpan={3}
+                                    count={rows.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    SelectProps={{
+                                        inputProps: {'aria-label': 'rows per page'},
+                                        native: true,
+                                    }}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                    ActionsComponent={TablePaginationActions}
+                                />
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                </div>
+            </Paper>
+        </>
     );
 }
+
+export default connect(null, {addPrevPath})(CustomPaginationActionsTable)

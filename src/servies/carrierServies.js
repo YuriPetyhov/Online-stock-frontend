@@ -27,6 +27,19 @@ export const allCarriers = () => {
 };
 
 export const deleteCarriers = (id) => {
-    console.log(id)
     return axios.delete(`${server}api/carriers/${id}`)
 };
+
+export const updateCarrier = (newCarrier) => {
+    const{company, countryCode, email, passportNumber, tel, _id} = newCarrier;
+    axios.post(`${server}api/carriers/update`, {
+     id:_id,
+     company: company,
+     countryCode:countryCode,
+     email: email,
+     passportNumber: passportNumber,
+     tel: tel
+ })
+     .then((res) => {console.log(res)})
+        .catch((err) => console.log(err))
+}

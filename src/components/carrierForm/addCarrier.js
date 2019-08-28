@@ -54,6 +54,8 @@ const AddCarrier = (props) => {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextValidator
+                                    type='number'
+                                    className='noNumerical'
                                     variant="outlined"
                                     required
                                     fullWidth

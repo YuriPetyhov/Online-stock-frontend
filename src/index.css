@@ -11,6 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.noNumerical::-webkit-outer-spin-button,
+.noNumerical::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
 .noNumerical input::-webkit-outer-spin-button,
 .noNumerical input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */

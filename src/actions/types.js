@@ -3,9 +3,12 @@ export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const GET_CURRENT_STATISTIC = 'GET_CURRENT_STATISTIC';
 export const GET_CURRENT_COMPANIES_LIST = 'GET_CURRENT_COMPANIES_LIST';
 export const GET_CURRENT_COMPANY = 'GET_CURRENT_COMPANY';
-// driver
 export const ADD_CARRIER = 'ADD_CARRIER';
+
+export const  PREV_PATH = 'PREV_PATH';
+
 
 // company admin
 export const COMPANY_ADMIN = 'COMPANY_ADMIN'
 export const COMPANY_ADMINS = 'COMPANY_ADMINS'
+
