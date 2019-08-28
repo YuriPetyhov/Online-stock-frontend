@@ -5,3 +5,7 @@ export const GET_CURRENT_COMPANIES_LIST = 'GET_CURRENT_COMPANIES_LIST';
 export const GET_CURRENT_COMPANY = 'GET_CURRENT_COMPANY';
 // driver
 export const ADD_CARRIER = 'ADD_CARRIER';
+
+// company admin
+export const COMPANY_ADMIN = 'COMPANY_ADMIN'
+export const COMPANY_ADMINS = 'COMPANY_ADMINS'
