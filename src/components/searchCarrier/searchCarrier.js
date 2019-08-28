@@ -7,12 +7,10 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import useStyles from "../searchCarrier/searchCarrierStyles";
-import {searchCarrier} from "../../servies/carrierServies";
 import {findDriver} from "../../servies/driverServies";
 import SearchIcon from '@material-ui/icons/Search';
 import {connect} from 'react-redux';
-import {GET_ERRORS} from "../../actions/types";
-
+import {addPrevPath, searchCarrier} from '../../actions/carrierAction';
 const SearchCarrier = (props) => {
     const [passport, setPassport] = useState('');
     const [driver, setDriver] = useState('');
@@ -25,29 +23,11 @@ const SearchCarrier = (props) => {
     };
     const handleSubmitCarrier = (e) => {
         e.preventDefault();
-
+        props.addPrevPath(props.location.pathname)
         const  findCarrier = {
             passport: passport,
         };
-        searchCarrier(findCarrier)
-            .then((res) => {
-                props.dispatch({
-                    type:GET_ERRORS,
-                    payload: {}
-                })
-                if(res.data._id ) {
-                    props.history.push('/addTtn')
-                } else {
-                    props.history.push('/addCarrier')
-                }
-            })
-            .catch((err) => {
-                props.dispatch({
-                    type:GET_ERRORS,
-                    payload: {carrier:`This field musn't be empty`}
-                })
-            })
-
+        props.searchCarrier(findCarrier, props.history)
 };
     const handleSubmitDriver = (e) => {
         e.preventDefault();
@@ -55,26 +35,7 @@ const SearchCarrier = (props) => {
             const driverLicense = {
                 license: driver,
             };
-            findDriver(driverLicense)
-                .then((res) => {
-                    props.dispatch({
-                        type:GET_ERRORS,
-                        payload: {}
-                    })
-                    if(!res.data._id ) {
-                        props.history.push('/driveRegistration')
-                    } else {
-                        props.history.push('/addTtn')
-                    }
-                })
-                .catch((err) => {
-                    props.dispatch({
-                        type:GET_ERRORS,
-                        payload: {driver:"This field musn't be empty"}
-                    })
-
-                })
-
+            props.findDriver(driverLicense, props.history)
     };
 
     const classes = useStyles();
@@ -146,6 +107,7 @@ const SearchCarrier = (props) => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+
                     >
                         Search
                     </Button>
@@ -162,7 +124,8 @@ const SearchCarrier = (props) => {
 const mapStateToProps = state => ({
     driverErr: state.errors.driver,
     carrierErr: state.errors.carrier,
-    store: state
+    store: state,
+    prevPath: state.carriersReducer.prevPath
 })
 
-export default connect(mapStateToProps, null)(SearchCarrier)
+export default connect(mapStateToProps, {addPrevPath, searchCarrier, findDriver} )(SearchCarrier)

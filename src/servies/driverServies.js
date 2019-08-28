@@ -1,5 +1,6 @@
 import axios from 'axios';
 import server from "../serverConfig";
+import {GET_ERRORS} from '../actions/types'
 
 export const addDriver = (driver) => {
     const{email, name, surnName, drivingLicense} = driver;
@@ -12,7 +13,25 @@ export const addDriver = (driver) => {
     })
 };
 
-export const findDriver = (data) => {
+export const findDriver = (data, history) => dispatch => {
     const{license} = data;
-    return axios.get(`${server}api/drivers/${license}`)
+      axios.get(`${server}api/drivers/${license}`)
+          .then((res) => {
+             dispatch({
+                  type: GET_ERRORS,
+                  payload: {}
+              })
+              if(!res.data._id ) {
+                  history.push('/driveRegistration')
+              } else {
+                 history.push('/addTtn')
+              }
+          })
+          .catch((err) => {
+             dispatch({
+                  type:GET_ERRORS,
+                  payload: {driver:"This field musn't be empty"}
+              })
+
+          })
 }

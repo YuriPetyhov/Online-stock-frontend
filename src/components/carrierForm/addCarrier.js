@@ -10,7 +10,9 @@ import useStyles from "./addCarrierStyles";
 import {addCarrier} from "../../servies/carrierServies";
 import SearchIcon from '@material-ui/icons/Search';
 import ReactPhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css'
+import 'react-phone-input-2/dist/style.css';
+import { connect } from 'react-redux'
+import {addPrevPath} from "../../actions/carrierAction";
 
 const AddCarrier = (props) => {
     const [carrier, setCarrier] = useState({});
@@ -30,10 +32,9 @@ const AddCarrier = (props) => {
         const  carrierInfo = {
             carrier: carrier,
         };
-        console.log(carrierInfo)
         addCarrier(carrierInfo)
             .then((res) => {
-                 props.history.push('/searchCarrier')
+                props.history.push(props.prevPath)
             })
     };
 
@@ -129,6 +130,7 @@ const AddCarrier = (props) => {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+
                         >
                             Add
                         </Button>
@@ -141,5 +143,7 @@ const AddCarrier = (props) => {
     )
 
 }
-
-export default AddCarrier
+const mapStateToProps = state => ({
+    prevPath: state.carriersReducer.prevPath
+})
+export default connect(mapStateToProps, null)(AddCarrier)

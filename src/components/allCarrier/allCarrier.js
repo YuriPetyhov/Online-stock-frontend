@@ -18,13 +18,10 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import TextField from '@material-ui/core/TextField';
 import useStyles from './allCarrierStyle';
 import {allCarriers, deleteCarriers, updateCarrier} from "../../servies/carrierServies";
 import {addPrevPath} from '../../actions/carrierAction';
 import Spinner from '../spinner';
-
-
 
 function TablePaginationActions(props) {
     const classes = useStyles();
@@ -89,8 +86,8 @@ function createData({...rest}) {
 }
 
 function CustomPaginationActionsTable(props) {
-    const [rows, setRows] = useState([]);
     const classes = useStyles();
+    const [rows, setRows] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [loaded, setLoaded] = useState(false);
@@ -103,7 +100,7 @@ function CustomPaginationActionsTable(props) {
 
     const handlePrevPath = () => {
         props.addPrevPath(props.location.pathname);
-        //props.history.push("/addCarrier")
+        props.history.push("/addCarrier")
     }
 
     function handleChangeRowsPerPage(event) {
@@ -123,16 +120,7 @@ function CustomPaginationActionsTable(props) {
     }, []);
 
     const removeItem = (id) => {
-
-        console.log(id)
-        const newArr = rows.filter((item) => item._id != id);
-        deleteCarriers(id)
-            .then((res) => {
-                setRows(newArr);
-            })
-            .catch((err) => {
-                console.error(err)
-            })
+        deleteCarriers(id, setRows, rows)
     };
     const handleEdit = (id) => {
         rows.forEach((item, indx) => {
@@ -151,31 +139,7 @@ function CustomPaginationActionsTable(props) {
     }
 
     const handleNewCarrier = (id) => {
-        let indx;
-        let found = rows.find((elem, index) => {
-            if(elem._id === id) {
-                indx = index;
-                return elem
-            }
-        });
-        const{carrier, email, tel} = inputValue;
-
-        if (!!carrier) {
-            found.company = carrier
-        }
-
-        if(!!email) {
-            found.email = email
-        }
-
-        if(!!tel) {
-            found.tel = tel
-        }
-
-      found.isDisabled = false;
-
-      setRows([...rows, found])
-        updateCarrier(found)
+        updateCarrier(rows, inputValue, id, setRows)
     }
 
     return (
