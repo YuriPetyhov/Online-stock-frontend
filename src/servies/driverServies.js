@@ -9,7 +9,7 @@ export const addDriver = (driver) => {
         name: name,
         surname:  surnName,
         drivingLicense: drivingLicense
-    } )
+    })
 };
 
 export const findDriver = (data) => {
