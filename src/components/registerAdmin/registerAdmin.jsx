@@ -122,7 +122,7 @@ const AdminRegister = (props) => {
             </div>
         </Container>
     );
-}
+};
 
 AdminRegister.propTypes = {
     auth: PropTypes.object.isRequired,

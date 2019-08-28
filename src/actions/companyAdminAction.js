@@ -46,7 +46,7 @@ export const getStatistic = (date) => dispatch => {
 };
 
 export const getCompaniesList = () => dispatch => {
-    axios.post(`${server}api/admins/getList`)
+    axios.get(`${server}api/companyadmins/`)
         .then(res => {
             dispatch({
                 type: GET_CURRENT_COMPANIES_LIST,
