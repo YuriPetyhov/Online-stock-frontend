@@ -20,9 +20,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
 import useStyles from './allCarrierStyle';
-import {allCarriers, deleteCarriers} from "../../servies/carrierServies";
+import {allCarriers, deleteCarriers, updateCarrier} from "../../servies/carrierServies";
 import {addPrevPath} from '../../actions/carrierAction';
-import Spinner from '../spinner'
+import Spinner from '../spinner';
+
 
 
 function TablePaginationActions(props) {
@@ -157,27 +158,24 @@ function CustomPaginationActionsTable(props) {
                 return elem
             }
         });
-        const{carrier, email, tel} = inputValue
-        //TODO погфиксить если я  не обновлю не одно из полей
-        if(!!carrier) {
-            found = {...found, company: inputValue.carrier, isDisabled: false}
-        } else if(!!email) {
-            found = {...found, email: inputValue.email,  isDisabled: false}
-        } else if(!!tel) {
-            found = {...found, tel:  inputValue.tel, isDisabled: false}
+        const{carrier, email, tel} = inputValue;
+
+        if (!!carrier) {
+            found.company = carrier
         }
 
-        let newArr = [];
+        if(!!email) {
+            found.email = email
+        }
 
-         for(let i = 0; i < rows.length - 1; i++) {
-            if(i == indx) {
-                newArr.push(found)
-            } else {
-                newArr.push(rows[i])
-            }
-         }
-         setRows(newArr)
+        if(!!tel) {
+            found.tel = tel
+        }
 
+      found.isDisabled = false;
+
+      setRows([...rows, found])
+        updateCarrier(found)
     }
 
     return (
