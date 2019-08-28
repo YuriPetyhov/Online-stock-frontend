@@ -8,5 +8,5 @@ export const addDriver = (driver) => {
         email:email,
         name: name,
         surname:  surnName
-    })
+    } )
 };
