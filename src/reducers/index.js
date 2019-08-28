@@ -4,7 +4,7 @@ import authReducer from './authReducer';
 import adminCompanyStatisticReduser from './adminsCompanyStatisticReduser';
 import companiesListReduser from './companiesListReduser';
 import companyReduser from './companyReduser';
-import carriersReducer from "./carriersReducer";
+import warehouseReduser from './warehouseReduser';
 
 export default combineReducers({
     errors: errorReducer,
@@ -12,5 +12,5 @@ export default combineReducers({
     adminCompanyStatistic:adminCompanyStatisticReduser,
     companiesList:companiesListReduser,
     currentCompany:companyReduser,
-    carriersReducer: carriersReducer
+    warehouses:warehouseReduser
 });
