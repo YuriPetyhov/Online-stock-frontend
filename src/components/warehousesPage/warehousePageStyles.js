@@ -6,6 +6,10 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.common.white,
         },
     },
+    root: {
+        width: '100%',
+        overflowX: 'auto',
+    },
     main: {
         width: '100%',
         display: 'flex',

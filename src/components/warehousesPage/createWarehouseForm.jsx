@@ -23,7 +23,6 @@ import 'sweetalert2/src/sweetalert2.scss'
 import useStyles from './warehousePageStyles'
 import warehouseImage from '../../resources/images/warehouse-icon-png-8.jpg'
 import {connect} from "react-redux";
-import Box from "@material-ui/core/Box";
 
 const WarehouseForm = (props) => {
     const classes = useStyles();
@@ -56,6 +55,8 @@ const WarehouseForm = (props) => {
             title: 'Congratulations!',
             text: 'Warehouse successfully created !',
             allowOutsideClick: false
+        }).then(()=>{
+            window.location.reload()
         })
     };
 
@@ -120,6 +121,7 @@ const WarehouseForm = (props) => {
         e.preventDefault();
 
         const warehouse = {
+            adminId:props.auth.user.id,
             name: values.name,
             license: values.license,
             totalArea: originalArea,
@@ -184,7 +186,7 @@ const WarehouseForm = (props) => {
                                     getAriaValueText={handleChangeArea}
                                     aria-labelledby="discrete-slider"
                                     valueLabelDisplay="auto"
-                                    step={10}
+                                    step={5}
                                     marks
                                     min={0}
                                     max={1000}
@@ -244,7 +246,7 @@ const WarehouseForm = (props) => {
                                             getAriaValueText={handleChangeCurrentArea}
                                             defaultValue={0}
                                             valueLabelDisplay="auto"
-                                            step={10}
+                                            step={5}
                                             marks
                                             min={0}
                                             max={totalArea}
