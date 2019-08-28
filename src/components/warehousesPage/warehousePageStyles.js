@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -6,18 +6,29 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.common.white,
         },
     },
+    main: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'start',
+        justifyItems: 'start',
+        alignContent: 'start',
+        alignItems: 'start',
+    },
+
     paper: {
-        width:'40%',
-        marginTop: theme.spacing(5),
+        width: '50%',
         display: 'flex',
         flexDirection: 'column',
     },
+
     paperList: {
-        marginLeft:'15%',
-        backgroundColor:'red',
-        width:'40%',
-        marginTop: theme.spacing(5),
+        marginLeft: '5%',
         display: 'flex',
+        justifyContent: 'start',
+        justifyItems: 'start',
+        alignContent: 'center',
+        alignItems: 'center',
+        width: '50%',
         flexDirection: 'column',
     },
     formControl: {
@@ -27,8 +38,15 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         marginTop: theme.spacing(3),
     },
+    icon: {
+        width: '20%'
+    },
     submit: {
         margin: theme.spacing(3, 0, 2),
+    },
+    cardArea: {
+        margin: theme.spacing(3, 3, 3, 3),
+        width: '100%'
     },
     card: {
         marginTop: theme.spacing(7),
