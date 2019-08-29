@@ -18,6 +18,7 @@ import AllCarrier from '../allCarrier';
 import TtnForm from '../ttnForm';
 import AddCarrier from "../carrierForm";
 import DeliveryFromStockForm from '../deliveryFromStock/deliveryFromStock'
+import Warehousing from '../managerWarehousing/warehousing'
 
 const SecurityRoute = (props) => {
     if (props.auth.isAuthenticated) {
@@ -28,7 +29,7 @@ const SecurityRoute = (props) => {
                         <Header/>
                         <Switch>
                             <Route exact path="/stockDelivery" component={DeliveryFromStockForm}/>
-                            <Route exact path="/manager2" component={AdminRegister}/>
+                            <Route exact path="/warehousing" component={Warehousing}/>
                             <Route exact path="/manager3" component={AdminRegister}/>
                             <Route exact path="/manager4" component={AdminRegister}/>
                             <Route component={Home}/>
