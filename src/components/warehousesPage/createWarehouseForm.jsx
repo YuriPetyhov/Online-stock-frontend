@@ -21,7 +21,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
 import useStyles from './warehousePageStyles'
-import warehouseImage from '../../resources/images/warehouse-icon-png-8.jpg'
+// import warehouseImage from '../../resources/images/warehouse-icon-png-8.jpg'
 import {connect} from "react-redux";
 import Box from "@material-ui/core/Box";
 
@@ -274,7 +274,7 @@ const WarehouseForm = (props) => {
                     ) : null}
                 </div>
                 <div className={classes.paperList}>
-                    <img src={warehouseImage} className={classes.icon}/>
+                    {/* <img src={warehouseImage} className={classes.icon}/> */}
                     <AreaCard
                         handleDeleteArea={handleDeleteArea}
                         list={list}
