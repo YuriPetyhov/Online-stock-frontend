@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import {uid} from 'react-uid';
 const useStyles = makeStyles(theme => ({
     root: {
-        width: '25%',
+        width: '50%',
         margin:"25px auto",
         overflowX: 'auto',
     },
@@ -29,6 +29,8 @@ export default function SimpleTable(props) {
                         <TableCell>Carrier</TableCell>
                         <TableCell align="right">Email&nbsp;</TableCell>
                         <TableCell align="right">Phone&nbsp;</TableCell>
+                        <TableCell align="right">Passport&nbsp;</TableCell>
+                        <TableCell align="right">Country&nbsp;</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -39,6 +41,8 @@ export default function SimpleTable(props) {
                             </TableCell>
                             <TableCell align="right">{row.email}</TableCell>
                             <TableCell align="right">{row.tel}</TableCell>
+                            <TableCell align="right">{row.passport}</TableCell>
+                            <TableCell align="right">{row.country}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

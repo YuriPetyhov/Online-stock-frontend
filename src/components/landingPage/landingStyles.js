@@ -38,10 +38,9 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(2),
     },
     footer: {
+        position:'bottom',
         borderTop: `1px solid ${theme.palette.divider}`,
-        marginTop: theme.spacing(5),
-        paddingTop: theme.spacing(3),
-        paddingBottom: theme.spacing(3),
+        marginTop: theme.spacing(10),
         [theme.breakpoints.up('sm')]: {
             paddingTop: theme.spacing(6),
             paddingBottom: theme.spacing(6),

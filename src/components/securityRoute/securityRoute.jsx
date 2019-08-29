@@ -3,18 +3,22 @@ import {Router, Route, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import AdminRegister from "../registerAdmin/registerAdmin";
+import Warehouse from "../warehousesPage/warehouse";
+import UserForm from "../registerUsers/registerUser";
 import DriverRegistrer from '../registerDrive';
 import Home from '../homePage/homePage';
 import Login from '../loginPage/login';
 import Report from '../mainAdminReportPage/reportPage'
 import Header from '../header/header';
+import Footer from '../footer/footer';
 import Companies from '../companiesListPage/companiesList'
-
 import Carrier from '../searchCarrier';
-
 import Landing from '../landingPage/landing'
-
-
+import AllCarrier from '../allCarrier';
+import TtnForm from '../ttnForm';
+import AddCarrier from "../carrierForm";
+import DeliveryFromStockForm from '../deliveryFromStock/deliveryFromStock'
+import Warehousing from '../managerWarehousing/warehousing'
 
 const SecurityRoute = (props) => {
     if (props.auth.isAuthenticated) {
@@ -24,12 +28,13 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Switch>
-                            <Route path="/manager1" exact component={AdminRegister}/>
-                            <Route path="/manager2" exact component={AdminRegister}/>
-                            <Route path="/manager3" exact component={AdminRegister}/>
-                            <Route path="/manager4" exact component={AdminRegister}/>
+                            <Route exact path="/stockDelivery" component={DeliveryFromStockForm}/>
+                            <Route exact path="/warehousing" component={Warehousing}/>
+                            <Route exact path="/manager3" component={AdminRegister}/>
+                            <Route exact path="/manager4" component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'operator':
@@ -39,12 +44,12 @@ const SecurityRoute = (props) => {
                         <Switch>
                             <Route exact path="/searchCarrier" component={Carrier}/>
                             <Route exact path="/driveRegistration" component={DriverRegistrer}/>
-                            <Route exact path="/operator" component={AdminRegister}/>
-                            <Route exact path="/operator3" component={AdminRegister}/>
-                            <Route exact path="/operator4" component={AdminRegister}/>
+                            <Route exact path="/allCarrier" component={AllCarrier} />
+                            <Route exact path="/addCarrier" component={AddCarrier} />
+                            <Route exact path="/addTtn" component={TtnForm} />
                             <Route component={Home}/>
                         </Switch>
-
+                        <Footer/>
                     </div>
                 );
             case 'controller':
@@ -58,6 +63,7 @@ const SecurityRoute = (props) => {
                             <Route exact path="/controller4" component={AdminRegister}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'mainAdmin':
@@ -70,6 +76,7 @@ const SecurityRoute = (props) => {
                             <Route exact path="/companiesList" component={Companies}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             case 'companyAdmin':
@@ -77,12 +84,11 @@ const SecurityRoute = (props) => {
                     <div>
                         <Header/>
                         <Switch>
-                            <Route exact path="/companyAdmin1" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin2" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin3" component={AdminRegister}/>
-                            <Route exact path="/companyAdmin4" component={AdminRegister}/>
+                            <Route exact path="/myWarehouses" component={Warehouse}/>
+                            <Route exact path="/createUser" component={UserForm}/>
                             <Route component={Home}/>
                         </Switch>
+                        <Footer/>
                     </div>
                 );
             default:
@@ -97,6 +103,7 @@ const SecurityRoute = (props) => {
                     <Route exact path="/login" component={Login}/>
                     <Route component={Landing}/>
                 </Switch>
+                <Footer/>
             </div>
         )
 

@@ -2,10 +2,10 @@ import axios from 'axios';
 import {GET_ERRORS} from './types';
 import server from '../serverConfig'
 
-export const registerAdmin = (admin, reset) => dispatch => {
-    axios.post(`${server}api/admin/registration`, admin)
+export const registerUser = (user, reset) => dispatch => {
+    axios.post(`${server}api/users/registration`, user)
         .then(() => {
-            reset()
+            reset();
             dispatch({
                 type: GET_ERRORS,
                 payload: {}
@@ -20,3 +20,4 @@ export const registerAdmin = (admin, reset) => dispatch => {
             }
         });
 };
+

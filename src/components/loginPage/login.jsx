@@ -31,20 +31,6 @@ const Login = (props) => {
         errors: {}
     });
 
-    const validateRules = () => {
-        ValidatorForm.addValidationRule('isUser', () => {
-            return !props.errors.email;
-        });
-        ValidatorForm.addValidationRule('isPassword', () => {
-            return !props.errors.password;
-        });
-    };
-
-
-    useEffect(() => {
-        validateRules()
-    });
-
     const handleInputChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
     };
@@ -95,8 +81,8 @@ const Login = (props) => {
                         autoFocus
                         onChange={handleInputChange}
                         value={values.email}
-                        validators={['required', 'isEmail', 'isUser']}
-                        errorMessages={['this field is required', 'email is not valid', props.errors.email]}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['this field is required', 'email is not valid']}
                     />
                     <TextValidator
                         variant="outlined"
@@ -109,16 +95,19 @@ const Login = (props) => {
                         id="password"
                         value={values.password}
                         autoComplete="current-password"
-                        validators={['required', 'isPassword']}
-                        errorMessages={['this field is required', props.errors.password]}
+                        validators={['required']}
+                        errorMessages={['this field is required']}
                         onChange={handleInputChange}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
                         label="Remember me"
                     />
-                    <span style={{color: 'red'}}>{props.errors.email}</span>
-                    <span style={{color: 'red'}}>{props.errors.password}</span>
+                    <Box mt={1}>
+                        <span style={{color: 'red'}}>{props.errors.email}</span>
+                        <span style={{color: 'red'}}>{props.errors.password}</span>
+                    </Box>
+
                     <Button
                         type="submit"
                         fullWidth
@@ -134,16 +123,10 @@ const Login = (props) => {
                                 Forgot password?
                             </Link>
                         </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
                     </Grid>
                 </ValidatorForm>
             </Box>
-            <Box mt={9}>
-            </Box>
+
         </Container>
     );
 };

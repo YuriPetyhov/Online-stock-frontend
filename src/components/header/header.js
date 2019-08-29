@@ -1,7 +1,7 @@
 import React from 'react';
 import {logoutUser} from '../../actions/authenticationAction';
 
-import {Link} from 'react-router-dom';
+import Link from './Link';
 import Button from '@material-ui/core/Button';
 
 import {connect} from "react-redux";
@@ -45,25 +45,24 @@ const Header = (props) => {
                     {name: 'Companies', link: '/companiesList'}]);
             case 'companyAdmin':
                 return navigation([
-                    {name: 'companyAdmin1', link: '/companyAdmin1'},
-                    {name: 'companyAdmin2', link: '/companyAdmin2'},
-                    {name: 'companyAdmin3', link: '/companyAdmin3'},
-                    {name: 'companyAdmin4', link: '/companyAdmin4'}]);
+                    {name: 'Home', link: '/'},
+                    {name: 'My warehouses', link: '/myWarehouses'},
+                    {name: 'Create new user', link: '/createUser'}]);
             case 'manager':
                 return navigation([
-                    {name: 'manager1', link: '/manager1'},
-                    {name: 'manager2', link: '/manager2'},
+                    {name: 'Stock delivery', link: '/stockDelivery'},
+                    {name: 'Warehousing', link: '/warehousing'},
                     {name: 'manager3', link: '/manager3'},
                     {name: 'manager4', link: '/manager4'}]);
             case 'operator':
                 return navigation([
                     {name: 'Search carrier', link: '/searchCarrier'},
                     {name: 'Add driver', link: '/driveRegistration'},
-                    {name: 'operator3', link: '/operator3'},
+                    {name: 'All carrier', link: '/allCarrier'},
                     {name: 'operator4', link: '/operator4'}]);
             case 'controller':
                 return navigation([
-                    {name: 'controller1', link: '/controller1'},
+                    {name: 'My warehouses', link: '/myWarehouses'},
                     {name: 'controller2', link: '/controller2'},
                     {name: 'controller3', link: '/controller3'},
                     {name: 'controller4', link: '/controller4'}]);

@@ -29,7 +29,7 @@ export default function AlertDialog(props) {
                     <Link className = 'link' to="/searchCarrier" onClick={props.closeModal} color="primary">
                         Нет, спасибо
                     </Link>
-                    <Link className = 'link' to="/driveRegistration" onClick={handleClose} color="primary">
+                    <Link className = 'link' to="/addTtn" onClick={handleClose} color="primary">
                         Да, хочу
                     </Link>
                 </DialogActions>

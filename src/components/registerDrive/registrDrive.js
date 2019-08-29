@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {addDriver} from '../../servies/addDriver';
+import {addDriver} from '../../servies/driverServies';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +16,7 @@ import useStyles from './registerDriverStyles'
 
 const DriverRegister = (props) => {
     const [values, setValues] = useState({
+        license: '',
         email: '',
         name: '',
         surnName: ''
@@ -31,8 +32,11 @@ const DriverRegister = (props) => {
         const driver = {
             email: values.email,
             name: values.name,
-            surnName: values.surnName
+            surnName: values.surnName,
+            drivingLicense: values.license
         };
+
+        console.log(driver)
         props.addDriver(driver);
 
     };
@@ -50,6 +54,20 @@ const DriverRegister = (props) => {
                     New company driver form
                 </Typography>
                 <ValidatorForm className={classes.form} noValidate onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextValidator
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="license"
+                                label="Driver's license"
+                                name="license"
+                                autoComplete="license"
+                                onChange={handleInputChange}
+                            />
+                        </Grid>
+                    </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextValidator
